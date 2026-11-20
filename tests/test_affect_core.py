@@ -340,7 +340,79 @@ class Behaviour(unittest.TestCase):
             self.assertIn("agent:bob", json.loads(run("consolidate")))
             st = json.loads(run("state", hours="1"))
             self.assertLess(st["sentiments"]["agent:bob"]["liking"], 0)
-            self.assertEqual(len(Path(d, "kim.log.jsonl").read_text().splitlines()), 3)
+            self.assertEqual(len(Path(d, "kim.log.jsonl").read_text().splitlines()), 4)
+
+
+class Hardening(unittest.TestCase):
+    def cli(self, d, *a, agent="kim", stdin=None):
+        return subprocess.run([sys.executable, CLI, *a, "--agent", agent, "--state-dir", d,
+                               "--hours", "0"], capture_output=True, text=True, input=stdin)
+
+    def test_bad_input_fails_cleanly(self):
+        with tempfile.TemporaryDirectory() as d:
+            for args in (("appraise", "--json", '{"event":"x",'),
+                         ("appraise", "--json", "{}"),
+                         ("appraise", "--json", '{"event":null}'),
+                         ("appraise", "--json", "[1,2]"),
+                         ("choose", "--json", '{"id":"t1"}'),
+                         ("init", "--persona", '{"traits":{"charisma":1}}')):
+                r = self.cli(d, *args)
+                self.assertNotEqual(r.returncode, 0, args)
+                self.assertNotIn("Traceback", r.stderr, args)
+                self.assertIn("affect_core", r.stderr, args)
+            for agent in ("../escape", "team/alpha", "bad id", ".hidden", ""):
+                r = self.cli(d, "state", agent=agent)
+                self.assertNotEqual(r.returncode, 0, agent)
+                self.assertNotIn("Traceback", r.stderr, agent)
+            self.assertFalse(Path(d, "..", "escape.json").exists())
+            r = subprocess.run([sys.executable, CLI, "tick", "--agent", "kim", "--state-dir", d,
+                                "--hours", "-5"], capture_output=True, text=True)
+            self.assertNotEqual(r.returncode, 0)
+
+    def test_sloppy_input_is_tolerated(self):
+        c = core()
+        c.appraise({"event": "x", "relevance": "high", "congruence": None, "novelty": 99,
+                    "agency": "aliens", "perceived_emotion": "anger", "topics": "optics",
+                    "control": float("nan"), "certainty": float("inf")})
+        c.appraise({"event": "y", "topics": [{"a": 1}, 7, "  Optics "], "source": 12,
+                    "perceived_emotion": {"label": "smugness", "intensity": "lots"}})
+        self.assertEqual([k for k in c.s["sentiments"] if k.startswith("topic:")], ["topic:optics"])
+        dec = c.choose([None, {"title": "no id"}, {"id": "a", "recent_posts": "many", "tags": "x"},
+                        {"id": "a"}, {"id": "b", "recent_posts": -50, "last_activity_hours": -3,
+                                      "participants": [None, 3]}])
+        self.assertEqual(set(dec["probs"]), {"a", "b", "new_thread", "skip"})
+        self.assertLess(dec["probs"]["b"], 0.9)
+        self.assertEqual(c.choose([])["action"] in ("new_thread", "skip"), True)
+
+    def test_trait_names_and_self_source(self):
+        c = ac.EmotionalCore("me", persona={"traits": {"openness": 0.9, "Neuroticism": "0.5", "e": "loud"}})
+        self.assertEqual((c.traits["O"], c.traits["N"], c.traits["E"]), (0.9, 0.5, 0.0))
+        c.appraise({"event": "my own post went well", "source": "me", "agency": "self",
+                    "praiseworthiness": .8, "relevance": .8, "congruence": .8})
+        self.assertNotIn("agent:me", c.s["sentiments"])
+        self.assertIsNone(c.s["emotions"]["pride"]["target"])
+
+    def test_no_boredom_while_moved_and_no_ceiling_pinning(self):
+        c = core({"N": .9})
+        for _ in range(8):
+            out = c.appraise({**INSULT, "novelty": 0.0})
+        self.assertLess(out.get("boredom", 0), 0.15)
+        self.assertLess(max(out.values()), 1.0)
+        self.assertNotIn("boredom toward", c.context())
+
+    def test_first_impression_is_not_yet_a_taste(self):
+        c = core(); c.appraise({"event": "meh", "topics": ["x"], "relevance": .5, "congruence": -.4})
+        self.assertNotIn("Dislikes", c.context())
+
+    def test_parallel_writes_are_not_lost(self):
+        with tempfile.TemporaryDirectory() as d:
+            ev = json.dumps({"event": "nice", "topics": ["same"], "relevance": .8, "congruence": .8})
+            ps = [subprocess.Popen([sys.executable, CLI, "appraise", "--json", ev, "--agent", "kim",
+                                    "--state-dir", d, "--hours", "0"], stdout=subprocess.DEVNULL)
+                  for _ in range(12)]
+            self.assertTrue(all(p.wait() == 0 for p in ps))
+            st = json.loads(self.cli(d, "dump").stdout)
+            self.assertEqual(st["sentiments"]["topic:same"]["ep"]["k"], 12)
 
 
 if __name__ == "__main__":

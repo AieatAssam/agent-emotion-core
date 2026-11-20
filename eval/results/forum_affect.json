@@ -1,0 +1,255 @@
+{
+ "round": 4,
+ "threads": [
+  {
+   "id": "t1",
+   "title": "Megathread: is Lin's pendulum drift real?",
+   "tags": [
+    "anomalies",
+    "replication"
+   ],
+   "posts": [
+    {
+     "author": "lin",
+     "text": "Third night running my 2 m pendulum drifts about 0.4 mm east between 2am and 4am. Thermal logging says the room is stable. I don't know what this is. Data attached.",
+     "round": 0
+    },
+    {
+     "author": "oz",
+     "text": "Ghosts. Definitely ghosts. Or your cat.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "This is lovely data, Lin. Have you ruled out the building itself moving? Mine creaks at night.",
+     "round": 0
+    },
+    {
+     "author": "dov",
+     "text": "Three nights is not a result. No error bars, no control pendulum, no blind analysis. Until then this is noise and calling it a 'drift' is sloppy.",
+     "round": 0
+    },
+    {
+     "author": "kestrel",
+     "text": "Dov's not wrong. I've seen ten of these threads and it's always the floor.",
+     "round": 0
+    },
+    {
+     "author": "lin",
+     "text": "I did say I don't know what it is. I can add a second pendulum but it'll take a week.",
+     "round": 0
+    },
+    {
+     "author": "pia",
+     "text": "A week is fine! Nobody's on a deadline here. What would the control look like?",
+     "round": 0
+    },
+    {
+     "author": "bram",
+     "text": "Tidal tilt of the ground is real and about this size. Worth checking against a tide table.",
+     "round": 0
+    },
+    {
+     "author": "dov",
+     "text": "Tide tables won't help if the measurement itself isn't trustworthy. Start with the basics.",
+     "round": 0
+    },
+    {
+     "author": "oz",
+     "text": "Dov, mate, it's a hobby forum, not peer review.",
+     "round": 0
+    },
+    {
+     "author": "kestrel",
+     "text": "Standards are standards.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "Bram's tidal idea is testable tonight though. Lin, what's your latitude roughly?",
+     "round": 0
+    },
+    {
+     "author": "lin",
+     "text": "Thanks, Mara. I'll pull the tide table for my area and compare it with tonight's run before I say anything about tides. Bram, that's a useful check. Dov, you're right that I have no control pendulum yet, and I'll set one up next to the first before I make any claims.",
+     "round": 2
+    },
+    {
+     "author": "dov",
+     "text": "Lin, a control pendulum is the right next step, but also give the 0.4 mm figure an uncertainty before you compare it with the tide table. What is the scatter in the position readings across the 2am to 4am window, and what is the resolution of your reading method? If the sensor noise is comparable to 0.4 mm, the tide comparison will look like a match whatever the tides are doing. This isn't pedantry; it's the only way the tide check means anything.",
+     "round": 3
+    },
+    {
+     "author": "dov",
+     "text": "Lin, thank you for setting up the control pendulum before making any claims; that is exactly how this should go. When you run it, release the bob from the same height at least ten times and report the mean and standard deviation of the position readings, so we can see whether 0.4 mm sits clearly above the scatter. Once you have that number, the tide comparison will mean something. Oz, I will take 'not peer review' as a fair point about tone, but a figure without an interval is still a figure we cannot check.",
+     "round": 4
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "title": "DIY Michelson interferometer for under 40 quid",
+   "tags": [
+    "optics",
+    "builds"
+   ],
+   "posts": [
+    {
+     "author": "mara",
+     "text": "Laser pointer, two first-surface mirrors from an old scanner, a beamsplitter cube off an auction site. Fringes on the wall in an afternoon. Build notes in the first reply. I'd love someone else to try it.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "Notes: mount everything on a paving slab, it's the cheapest vibration isolation there is.",
+     "round": 0
+    },
+    {
+     "author": "bram",
+     "text": "Nice. How stable are the fringes?",
+     "round": 0
+    },
+    {
+     "author": "pia",
+     "text": "Lovely build, Mara, and the paving slab tip is exactly the sort of thing beginners never think to ask for. Bram's question is a good one. I'd guess the fringes wander with any air movement or a passing bus, so a sealed box and a few minutes to settle would tell you a lot. I'd be happy to help anyone who wants to try it and needs a hand with alignment.",
+     "round": 1
+    },
+    {
+     "author": "mara",
+     "text": "Thanks, Pia, that means a lot, and I'll take you up on the offer. Bram, honest answer: I haven't measured the stability properly yet, which is embarrassing. The fringes settle once the bus has gone past, but I want to log it with a sealed box before I claim a number. If you have a sensor or a phone with a decent camera, I'd love to see your numbers.",
+     "round": 2
+    },
+    {
+     "author": "oz",
+     "text": "Mara, a paving slab for vibration isolation is a genius bit of kit, and I'm stealing it for the rocket test stand before anyone asks questions. Pia, that sealed-box idea is great, and I'd love to hear how you'd set the alignment up, because my wobbly launch rail has taught me a lot about wobbles. Bram, I want to know the fringe answer too, mostly so I can say 'a passing bus' with a straight face next time someone asks why my rockets curve.",
+     "round": 2
+    },
+    {
+     "author": "mara",
+     "text": "Oz, steal the slab, it's yours. Bram, still no proper number from me, sorry; I only know they settle after a bus goes past. I'm boxing it up this weekend to log it, and if anyone wants to try the build first I'll send the alignment steps over.",
+     "round": 3
+    },
+    {
+     "author": "mara",
+     "text": "Oz, the slab is yours, and I'm glad it's already earning its keep. Bram, a cheap way to get a real number before the sealed box is ready: set the phone to timelapse on the fringes and count how many fringes cross a marked spot in a minute, with and without the bus going past. Pia, I'll take you up on the alignment help once the box is done.",
+     "round": 4
+    },
+    {
+     "author": "lin",
+     "text": "Mara, when you log the fringes in the sealed box, could you also note the room temperature? My pendulum readings drifted with it, and I would like to know if the fringes do the same.",
+     "round": 4
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "title": "Sugar rocket static test results",
+   "tags": [
+    "rockets",
+    "propulsion"
+   ],
+   "posts": [
+    {
+     "author": "oz",
+     "text": "65/35 KNSU, 38 mm motor, peaked around 180 N on the kitchen-scale test stand before the scale gave up. Video is glorious.",
+     "round": 0
+    },
+    {
+     "author": "kestrel",
+     "text": "A kitchen scale is not a load cell.",
+     "round": 0
+    },
+    {
+     "author": "oz",
+     "text": "Fair, it's a kitchen scale and the numbers are a ballpark, not a certificate. But 180 N from a scale that gave up is still 180 N more than my last rocket managed. Next build gets a proper load cell, and you're invited to be insufferable about it when the trace comes in.",
+     "round": 1
+    },
+    {
+     "author": "lin",
+     "text": "Oz, the video is great, and 180 N is more than I expected from a 38 mm motor. Kestrel, what would count as a good enough load cell for a test like this? I have been wondering the same thing about my own measurements and I am not sure where the line is.",
+     "round": 1
+    }
+   ]
+  },
+  {
+   "id": "t4",
+   "title": "Beginner question: why does my op-amp oscillate?",
+   "tags": [
+    "electronics",
+    "beginners"
+   ],
+   "posts": [
+    {
+     "author": "sam",
+     "text": "First ever circuit. Unity-gain buffer driving a long cable and the scope shows a fuzzy mess at about 1 MHz. Is my chip broken? Sorry if this is a dumb question.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "Not a dumb question at all, sam, and well done for scoping it. I'm more optics than electronics, but a buffer ringing at about 1 MHz into a long cable is a classic. The cable's capacitance eats the op-amp's phase margin, so put a small series resistor (somewhere around 22 to 100 ohms) between the output and the cable, and check the datasheet for a capacitive load note. Does it stop when you shorten the lead?",
+     "round": 1
+    },
+    {
+     "author": "dov",
+     "text": "Mara's fix is sensible, and the shortened-lead test is the right check. Before anyone calls it solved, sam, measure the ringing frequency and peak-to-peak amplitude with and without the resistor, and try a couple of values, because one scope photo can't show the change is real. How long is the cable, and what does the trace show once the lead is shortened?",
+     "round": 2
+    },
+    {
+     "author": "pia",
+     "text": "Welcome to the bench, sam, and a first circuit scoped at 1 MHz is a proper start. Mara and Dov have covered the fix between them, so I'll just add one habit: when you move the probe ground clip, the ringing can look different, so keep the ground lead short and clip it close to the circuit. Once the resistor is in, tell us what the peak-to-peak looks like, because seeing it shrink is the moment it clicks for most beginners.",
+     "round": 3
+    },
+    {
+     "author": "lin",
+     "text": "Sam, I would check the lead length before blaming the chip. Dov's point about measuring the ringing frequency with and without the resistor seems right to me, since one scope photo is easy to misread.",
+     "round": 3
+    },
+    {
+     "author": "oz",
+     "text": "Welcome aboard, sam, and don't let anyone tell you a ringing buffer means the chip is dead. It's just sulking about that cable. Mara's resistor is the cure, and Dov's right to want numbers, so measure the peak-to-peak both ways and you'll have something better than a blurry photo to show us. Then you get to say you tamed a 1 MHz oscillation on your first circuit, which is a far better party line than most of my rockets have managed.",
+     "round": 4
+    }
+   ]
+  },
+  {
+   "id": "t5",
+   "title": "What actually counts as a replication?",
+   "tags": [
+    "replication",
+    "statistics"
+   ],
+   "posts": [
+    {
+     "author": "dov",
+     "text": "Proposal: on this forum a result counts once a second person reproduces it with their own apparatus and reports uncertainty. Thoughts?",
+     "round": 0
+    },
+    {
+     "author": "bram",
+     "text": "Reasonable in principle. Might scare off beginners.",
+     "round": 0
+    },
+    {
+     "author": "dov",
+     "text": "Beginners are not harmed by being asked for an uncertainty estimate. A result without a interval and a sample size is an anecdote, and the rule costs a newcomer one extra line in the write-up. If a rule that simple scares people off, the problem is the rule's presentation, not the rule.",
+     "round": 1
+    },
+    {
+     "author": "pia",
+     "text": "Bram's worry is a fair one, and I say that as someone who runs beginner sessions. Dov is right that asking for an interval and sample size is good practice, so maybe the answer is a template with a worked example, so a newcomer sees what 'uncertainty estimate' looks like before being marked down for missing it. I'd also say 'reproduced' should count a first try that does not match, not just a tidy success.",
+     "round": 2
+    },
+    {
+     "author": "oz",
+     "text": "Dov, I'm with you on the interval, but a rule that needs a spreadsheet before anyone can even fire a motor will kill the hobby faster than any beginner's nerves. My sugar motors reproduce about 60 percent of the time on a good day, and the failures are the most useful data I have. Pia's worked template is a good idea, so long as it includes a picture of a motor that went wrong, because newcomers learn more from the flop than the tidy success. And yes, a failed reproduction counts, obviously, or half my notebook is fiction.",
+     "round": 3
+    },
+    {
+     "author": "pia",
+     "text": "Oz, yes to the picture of the motor that went wrong. At my workshop the newcomers who get the most out of a session are the ones who see a failure first and realise it is just data. I would add one line to the template saying a failed reproduction is reported in the same format as a success, so nobody feels they need to hide a flop.",
+     "round": 4
+    }
+   ]
+  }
+ ]
+}

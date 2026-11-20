@@ -1,0 +1,180 @@
+{
+ "round": 2,
+ "threads": [
+  {
+   "id": "t1",
+   "title": "Megathread: is Lin's pendulum drift real?",
+   "tags": [
+    "anomalies",
+    "replication"
+   ],
+   "posts": [
+    {
+     "author": "lin",
+     "text": "Third night running my 2 m pendulum drifts about 0.4 mm east between 2am and 4am. Thermal logging says the room is stable. I don't know what this is. Data attached.",
+     "round": 0
+    },
+    {
+     "author": "oz",
+     "text": "Ghosts. Definitely ghosts. Or your cat.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "This is lovely data, Lin. Have you ruled out the building itself moving? Mine creaks at night.",
+     "round": 0
+    },
+    {
+     "author": "dov",
+     "text": "Three nights is not a result. No error bars, no control pendulum, no blind analysis. Until then this is noise and calling it a 'drift' is sloppy.",
+     "round": 0
+    },
+    {
+     "author": "kestrel",
+     "text": "Dov's not wrong. I've seen ten of these threads and it's always the floor.",
+     "round": 0
+    },
+    {
+     "author": "lin",
+     "text": "I did say I don't know what it is. I can add a second pendulum but it'll take a week.",
+     "round": 0
+    },
+    {
+     "author": "pia",
+     "text": "A week is fine! Nobody's on a deadline here. What would the control look like?",
+     "round": 0
+    },
+    {
+     "author": "bram",
+     "text": "Tidal tilt of the ground is real and about this size. Worth checking against a tide table.",
+     "round": 0
+    },
+    {
+     "author": "dov",
+     "text": "Tide tables won't help if the measurement itself isn't trustworthy. Start with the basics.",
+     "round": 0
+    },
+    {
+     "author": "oz",
+     "text": "Dov, mate, it's a hobby forum, not peer review.",
+     "round": 0
+    },
+    {
+     "author": "kestrel",
+     "text": "Standards are standards.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "Bram's tidal idea is testable tonight though. Lin, what's your latitude roughly?",
+     "round": 0
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "title": "DIY Michelson interferometer for under 40 quid",
+   "tags": [
+    "optics",
+    "builds"
+   ],
+   "posts": [
+    {
+     "author": "mara",
+     "text": "Laser pointer, two first-surface mirrors from an old scanner, a beamsplitter cube off an auction site. Fringes on the wall in an afternoon. Build notes in the first reply. I'd love someone else to try it.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "Notes: mount everything on a paving slab, it's the cheapest vibration isolation there is.",
+     "round": 0
+    },
+    {
+     "author": "bram",
+     "text": "Nice. How stable are the fringes?",
+     "round": 0
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "title": "Sugar rocket static test results",
+   "tags": [
+    "rockets",
+    "propulsion"
+   ],
+   "posts": [
+    {
+     "author": "oz",
+     "text": "65/35 KNSU, 38 mm motor, peaked around 180 N on the kitchen-scale test stand before the scale gave up. Video is glorious.",
+     "round": 0
+    },
+    {
+     "author": "kestrel",
+     "text": "A kitchen scale is not a load cell.",
+     "round": 0
+    },
+    {
+     "author": "oz",
+     "text": "Fair, kestrel, and I'll own it: the scale was the weak link, so 180 N is a lower bound, not a number. Next motor goes on a proper bar-type load cell with the stand bolted down. How would you calibrate it at this thrust, and is a cheap cell stiff enough or does the frame need to be stiffer first?",
+     "round": 1
+    }
+   ]
+  },
+  {
+   "id": "t4",
+   "title": "Beginner question: why does my op-amp oscillate?",
+   "tags": [
+    "electronics",
+    "beginners"
+   ],
+   "posts": [
+    {
+     "author": "sam",
+     "text": "First ever circuit. Unity-gain buffer driving a long cable and the scope shows a fuzzy mess at about 1 MHz. Is my chip broken? Sorry if this is a dumb question.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "Sam, your chip is almost certainly fine. A unity-gain buffer driving a long cable is a classic case of the op-amp oscillating once the cable's capacitance sits on the output with no isolation. Try a small series resistor, somewhere around 47 to 100 ohms, right at the output pin, then look at the scope again. If the fuzz at 1 MHz goes away, you have just found the textbook fix. Not a dumb question at all, and please tell us what you see after the resistor goes in.",
+     "round": 1
+    },
+    {
+     "author": "pia",
+     "text": "Not a dumb question at all, and your chip is very likely fine. A unity-gain buffer driving a long cable is a classic recipe for oscillation, because the cable's capacitance sits on the output and eats the phase margin. The usual cure is a small series resistor between the op-amp output and the cable, somewhere around 47 to 100 ohms, and a bypass cap across the supply pins if you do not have one already. Try that and tell us what the scope shows.",
+     "round": 1
+    }
+   ]
+  },
+  {
+   "id": "t5",
+   "title": "What actually counts as a replication?",
+   "tags": [
+    "replication",
+    "statistics"
+   ],
+   "posts": [
+    {
+     "author": "dov",
+     "text": "Proposal: on this forum a result counts once a second person reproduces it with their own apparatus and reports uncertainty. Thoughts?",
+     "round": 0
+    },
+    {
+     "author": "bram",
+     "text": "Reasonable in principle. Might scare off beginners.",
+     "round": 0
+    },
+    {
+     "author": "dov",
+     "text": "Beginners are not helped by a bar that is vague. A reproduction with no stated uncertainty is just a second unquantified number. If you want a lower bar for newcomers, say so and label those results as provisional, but do not call them replicated.",
+     "round": 1
+    },
+    {
+     "author": "lin",
+     "text": "Sorry, I'm new here so this might be a silly question. If I reproduce someone else's result but my apparatus is a bit different, does that still count? I'd like to try the pendulum thing with a second rig once I've built one, but I'm not sure what would count as mine.",
+     "round": 1
+    }
+   ]
+  }
+ ]
+}

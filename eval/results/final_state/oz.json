@@ -1,0 +1,144 @@
+{
+ "version": "0.2.1",
+ "agent": "oz",
+ "persona": {
+  "traits": {
+   "O": 0.3,
+   "C": -0.2,
+   "E": 0.8,
+   "A": 0.1,
+   "N": -0.5
+  },
+  "interests": [
+   "rockets",
+   "propulsion",
+   "explosions"
+  ],
+  "bio": "Oz makes sugar rockets, jokes constantly and enjoys an audience. He bristles at people who take the fun out of things."
+ },
+ "baseline": [
+  0.322,
+  -0.20999999999999996,
+  0.489
+ ],
+ "mood": [
+  0.24481554222892132,
+  0.14834300064391226,
+  0.13628537222023973
+ ],
+ "emotions": {},
+ "chem": {
+  "da": 0.5720635105694913,
+  "ne": 0.44764938487526884,
+  "sht": 0.6013100507174185,
+  "cort": 0.2449883647978818,
+  "oxt": 0.41000000836114353,
+  "opi": 0.5000007724950452
+ },
+ "stress": 2.8404176332682315e-20,
+ "load": 0.0001361722965201432,
+ "opp": 0.08687271304348232,
+ "drives": {
+  "novelty": 0.22870869568362295,
+  "social": 0.3261065214005719,
+  "fatigue": 0.311153911282428
+ },
+ "sentiments": {
+  "topic:rockets": {
+   "L": 0.053848247688446794,
+   "W": 0.03339491673535733,
+   "n": 1,
+   "ep": null
+  },
+  "topic:propulsion": {
+   "L": 0.053848247688446794,
+   "W": 0.03339491673535733,
+   "n": 1,
+   "ep": null
+  },
+  "thread:t3": {
+   "L": 0.06736121921999863,
+   "W": 0.05565819455892899,
+   "n": 1,
+   "ep": null
+  },
+  "agent:kestrel": {
+   "L": 0.04371351903978294,
+   "W": 0.016697458367678716,
+   "n": 1,
+   "ep": null
+  },
+  "topic:optics": {
+   "L": 0.2632799918830545,
+   "W": 0.5334801335422985,
+   "n": 1,
+   "ep": null
+  },
+  "topic:builds": {
+   "L": 0.2632799918830545,
+   "W": 0.5334801335422985,
+   "n": 1,
+   "ep": null
+  },
+  "thread:t2": {
+   "L": 0.27776662749942505,
+   "W": 0.6527125758839724,
+   "n": 1,
+   "ep": null
+  },
+  "agent:mara": {
+   "L": 0.15906618312316723,
+   "W": 0.18955863480019827,
+   "n": 1,
+   "ep": null
+  },
+  "agent:pia": {
+   "L": 0.18037175905607072,
+   "W": 0.21826279133950993,
+   "n": 1,
+   "ep": null
+  }
+ },
+ "threads": {
+  "t3": {
+   "exposure": 0.28726579480692843
+  },
+  "t2": {
+   "exposure": 0.48362106487331624
+  },
+  "t5": {
+   "exposure": 0.7489761168191766
+  },
+  "t4": {
+   "exposure": 1.0
+  }
+ },
+ "memory": [
+  {
+   "t": 5.010204708046383,
+   "event": "mara posted a cheap interferometer build and asked others to try it",
+   "emotion": "interest",
+   "i": 0.806,
+   "source": "mara",
+   "thread": "t2"
+  },
+  {
+   "t": 5.010204708046383,
+   "event": "pia offered a helpful guess about fringe stability and an offer to help with alignment",
+   "emotion": "interest",
+   "i": 0.945,
+   "source": "pia",
+   "thread": "t2"
+  },
+  {
+   "t": 5.011843069063293,
+   "event": "I posted an enthusiastic reply in t2 thanking mara and pia",
+   "emotion": "interest",
+   "i": 0.838,
+   "source": null,
+   "thread": "t2"
+  }
+ ],
+ "t": 24.020738846262297,
+ "wall": 1795201685.6562443
+}

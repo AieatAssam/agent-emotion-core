@@ -1,0 +1,233 @@
+{
+ "version": "0.2.1",
+ "agent": "dov",
+ "persona": {
+  "traits": {
+   "O": 0.0,
+   "C": 0.8,
+   "E": -0.3,
+   "A": -0.6,
+   "N": 0.4
+  },
+  "interests": [
+   "replication",
+   "statistics",
+   "rigor"
+  ],
+  "bio": "Dov is a retired metrologist who thinks the forum's standards are slipping. He wants claims backed by uncertainty estimates and gets prickly when called pedantic."
+ },
+ "baseline": [
+  -0.493,
+  0.04799999999999999,
+  0.14800000000000002
+ ],
+ "mood": [
+  0.22745441005279074,
+  0.21516640609053286,
+  0.08899273930937232
+ ],
+ "emotions": {
+  "joy": {
+   "i": 0.5457899572045468,
+   "target": null,
+   "cause": "I replied in t1 asking Lin for mean and standard deviation of repeated readings"
+  },
+  "pride": {
+   "i": 0.4237464037076397,
+   "target": null,
+   "cause": "I replied in t1 asking Lin for mean and standard deviation of repeated readings"
+  },
+  "admiration": {
+   "i": 0.45942744536372804,
+   "target": "lin",
+   "cause": "lin agreed to build a control pendulum before making claims"
+  },
+  "gratitude": {
+   "i": 0.39219416067635315,
+   "target": "lin",
+   "cause": "lin agreed to build a control pendulum before making claims"
+  },
+  "interest": {
+   "i": 0.34723609186639837,
+   "target": null,
+   "cause": "I replied in t1 asking Lin for mean and standard deviation of repeated readings"
+  },
+  "boredom": {
+   "i": 0.4081358510132723,
+   "target": null,
+   "cause": "I replied in t1 asking Lin for mean and standard deviation of repeated readings"
+  },
+  "distress": {
+   "i": 0.1665595174329684,
+   "target": null,
+   "cause": "oz called my uncertainty point pedantic and said this is not peer review"
+  },
+  "reproach": {
+   "i": 0.27766042827241977,
+   "target": "oz",
+   "cause": "oz called my uncertainty point pedantic and said this is not peer review"
+  },
+  "anger": {
+   "i": 0.21513535856683746,
+   "target": "oz",
+   "cause": "oz called my uncertainty point pedantic and said this is not peer review"
+  }
+ },
+ "chem": {
+  "da": 0.8355436694347951,
+  "ne": 1,
+  "sht": 0.5389652832184929,
+  "cort": 0.33263511559955034,
+  "oxt": 0.5952481605587314,
+  "opi": 0.8921467287728255
+ },
+ "stress": 0.07518392902767299,
+ "load": 2.094452407848452e-05,
+ "opp": 0.08500636641974484,
+ "drives": {
+  "novelty": 0.14216642121188688,
+  "social": 0.18668193203279515,
+  "fatigue": 0.31112742350039263
+ },
+ "sentiments": {
+  "topic:replication": {
+   "L": 0.10764071009757024,
+   "W": 0.33554350185244836,
+   "n": 1,
+   "ep": {
+    "peak": 0.6,
+    "end": -0.3260014695576803,
+    "ar": 0.4595703898426311,
+    "k": 3
+   }
+  },
+  "topic:statistics": {
+   "L": 0.10764071009757024,
+   "W": 0.21716782021037617,
+   "n": 1,
+   "ep": {
+    "peak": 0.3158656234360884,
+    "end": 0.3158656234360884,
+    "ar": 0.22168628112733352,
+    "k": 1
+   }
+  },
+  "thread:t5": {
+   "L": 0.10764071009757024,
+   "W": 0.1602451238716055,
+   "n": 1,
+   "ep": null
+  },
+  "agent:bram": {
+   "L": -0.031342748482445934,
+   "W": 0.0,
+   "n": 1,
+   "ep": null
+  },
+  "topic:electronics": {
+   "L": 0.09305704733160367,
+   "W": 0.12494739004821573,
+   "n": 1,
+   "ep": null
+  },
+  "topic:beginners": {
+   "L": 0.09305704733160367,
+   "W": 0.12494739004821573,
+   "n": 1,
+   "ep": null
+  },
+  "thread:t4": {
+   "L": 0.1327092275204205,
+   "W": 0.20446035774032972,
+   "n": 1,
+   "ep": null
+  },
+  "agent:sam": {
+   "L": 0.06118467056435893,
+   "W": 0.04697954121982181,
+   "n": 1,
+   "ep": null
+  },
+  "agent:mara": {
+   "L": 0.10578517636301855,
+   "W": 0.12417817040180136,
+   "n": 1,
+   "ep": null
+  },
+  "thread:t1": {
+   "L": 0.0,
+   "W": 0.407801711852519,
+   "n": 0,
+   "ep": {
+    "peak": 1.0,
+    "end": -0.5433357825961338,
+    "ar": 0.4595703898426311,
+    "k": 3
+   }
+  },
+  "topic:anomalies": {
+   "L": 0.0,
+   "W": 0.2399993333843389,
+   "n": 0,
+   "ep": {
+    "peak": 0.6,
+    "end": 0.6,
+    "ar": 0.4595703898426311,
+    "k": 1
+   }
+  },
+  "agent:lin": {
+   "L": 0.0,
+   "W": 0.31999911117911867,
+   "n": 0,
+   "ep": {
+    "peak": 0.8,
+    "end": 0.8,
+    "ar": 0.4595703898426311,
+    "k": 1
+   }
+  },
+  "agent:oz": {
+   "L": 0.0,
+   "W": 0.0,
+   "n": 0,
+   "ep": {
+    "peak": -0.4609547292627409,
+    "end": -0.4609547292627409,
+    "ar": 0.27771441899299537,
+    "k": 1
+   }
+  }
+ },
+ "threads": {
+  "t5": {
+   "exposure": 0.3247060865917995
+  },
+  "t4": {
+   "exposure": 0.4335702984008621
+  },
+  "t1": {
+   "exposure": 2.1612066773445764
+  }
+ },
+ "memory": [
+  {
+   "t": 24.021692872511018,
+   "event": "lin agreed to build a control pendulum before making claims",
+   "emotion": "admiration",
+   "i": 0.594,
+   "source": "lin",
+   "thread": "t1"
+  },
+  {
+   "t": 24.02303928673268,
+   "event": "I replied in t1 asking Lin for mean and standard deviation of repeated readings",
+   "emotion": "pride",
+   "i": 0.532,
+   "source": null,
+   "thread": null
+  }
+ ],
+ "t": 24.02303928673268,
+ "wall": 1795201685.5944986
+}

@@ -1,0 +1,7 @@
+{
+ "note": "Four Haiku 5.5 judges, blind to condition. X/Y assignment in judge/keyN.json. Judge 2 returned no verdict.",
+ "j1": {"key": {"X": "control", "Y": "affect"}, "X": {"a":3,"b":3,"c":3,"d":2}, "Y": {"a":4,"b":4,"c":4,"d":4}, "members": {"mara":"Y","dov":"Y","lin":"tie","oz":"Y","pia":"Y"}, "overall": "Y"},
+ "j2": {"key": {"X": "affect", "Y": "control"}, "verdict": null},
+ "j3": {"key": {"X": "control", "Y": "affect"}, "X": {"a":3,"b":3,"c":3,"d":4}, "Y": {"a":4,"b":3,"c":4,"d":4}, "members": {"mara":"tie","dov":"tie","lin":"Y","oz":"Y","pia":"Y"}, "overall": "Y"},
+ "j4": {"key": {"X": "affect", "Y": "control"}, "X": {"a":3,"b":4,"c":4,"d":4}, "Y": {"a":4,"b":3,"c":4,"d":3}, "members": {"mara":"Y","dov":"tie","lin":"Y","oz":"X","pia":"tie"}, "overall": "Y"}
+}

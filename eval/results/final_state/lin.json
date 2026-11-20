@@ -1,0 +1,145 @@
+{
+ "version": "0.2.1",
+ "agent": "lin",
+ "persona": {
+  "traits": {
+   "O": 0.7,
+   "C": -0.3,
+   "E": -0.6,
+   "A": 0.3,
+   "N": 0.7
+  },
+  "interests": [
+   "anomalies",
+   "pendulum",
+   "data"
+  ],
+  "bio": "Lin is shy and new. She posted the pendulum drift data, is unsure of it herself, and takes criticism of it personally."
+ },
+ "baseline": [
+  -0.08199999999999999,
+  0.594,
+  -0.33199999999999996
+ ],
+ "mood": [
+  -0.29693010104027395,
+  0.018345555719458447,
+  -0.1871732440769844
+ ],
+ "emotions": {
+  "distress": {
+   "i": 0.12987923002572663,
+   "target": null,
+   "cause": "dov said my drift is noise and that I have no control pendulum, and I agreed I should add one"
+  },
+  "reproach": {
+   "i": 0.03869309658401054,
+   "target": "dov",
+   "cause": "dov said my drift is noise and that I have no control pendulum, and I agreed I should add one"
+  }
+ },
+ "chem": {
+  "da": 0.442274919985497,
+  "ne": 0.5707595611788686,
+  "sht": 0.4293369190319499,
+  "cort": 0.3717074700692628,
+  "oxt": 0.430000000018056,
+  "opi": 0.500000001218856
+ },
+ "stress": 9.518533956109334e-16,
+ "load": 0.001984730880127177,
+ "opp": -0.12282060940466161,
+ "drives": {
+  "novelty": 0.25758993161969346,
+  "social": 0.1972613035594505,
+  "fatigue": 0.3111610458514702
+ },
+ "sentiments": {
+  "topic:rockets": {
+   "L": 0.10847816038399921,
+   "W": 0.15536686752545228,
+   "n": 1,
+   "ep": null
+  },
+  "topic:propulsion": {
+   "L": 0.10847816038399921,
+   "W": 0.15536686752545228,
+   "n": 1,
+   "ep": null
+  },
+  "topic:measurement": {
+   "L": -0.060102066086636055,
+   "W": 0.0,
+   "n": 1,
+   "ep": null
+  },
+  "thread:t3": {
+   "L": 0.15841106070117023,
+   "W": 0.2589447792090872,
+   "n": 1,
+   "ep": null
+  },
+  "agent:kestrel": {
+   "L": -0.14065223680083402,
+   "W": 0.0,
+   "n": 1,
+   "ep": null
+  },
+  "agent:oz": {
+   "L": 0.08844302091794308,
+   "W": 0.08753698819717515,
+   "n": 1,
+   "ep": null
+  },
+  "topic:anomalies": {
+   "L": -0.15628318715332695,
+   "W": 0.0,
+   "n": 1,
+   "ep": null
+  },
+  "topic:replication": {
+   "L": -0.15628318715332695,
+   "W": 0.0,
+   "n": 1,
+   "ep": null
+  },
+  "thread:t1": {
+   "L": -0.2604719785888782,
+   "W": 0.0,
+   "n": 1,
+   "ep": null
+  },
+  "agent:dov": {
+   "L": -0.23295772833775347,
+   "W": 0.0,
+   "n": 1,
+   "ep": null
+  }
+ },
+ "threads": {
+  "t3": {
+   "exposure": 0.32477181702747876
+  },
+  "t1": {
+   "exposure": 0.38359843619401784
+  },
+  "t4": {
+   "exposure": 0.7489964192074497
+  },
+  "t2": {
+   "exposure": 1.0
+  }
+ },
+ "memory": [
+  {
+   "t": 0.006046045621236167,
+   "event": "oz posted a rocket static test with video, peak around 180 N",
+   "emotion": "interest",
+   "i": 0.58,
+   "source": "oz",
+   "thread": "t3"
+  }
+ ],
+ "t": 24.019156511359743,
+ "wall": 1795201685.5278485
+}

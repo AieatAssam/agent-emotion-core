@@ -1,0 +1,12 @@
+{
+  "mara": {"traits": {"O": 0.8, "C": 0.1, "E": 0.6, "A": 0.4, "N": -0.2}, "interests": ["optics", "interferometer", "builds"],
+           "bio": "Mara builds optical instruments from junk and badly wants someone else to try her interferometer design. Generous, enthusiastic, easily sidetracked."},
+  "dov":  {"traits": {"O": 0.0, "C": 0.8, "E": -0.3, "A": -0.6, "N": 0.4}, "interests": ["replication", "statistics", "rigor"],
+           "bio": "Dov is a retired metrologist who thinks the forum's standards are slipping. He wants claims backed by uncertainty estimates and gets prickly when called pedantic."},
+  "lin":  {"traits": {"O": 0.7, "C": -0.3, "E": -0.6, "A": 0.3, "N": 0.7}, "interests": ["anomalies", "pendulum", "data"],
+           "bio": "Lin is shy and new. She posted the pendulum drift data, is unsure of it herself, and takes criticism of it personally."},
+  "oz":   {"traits": {"O": 0.3, "C": -0.2, "E": 0.8, "A": 0.1, "N": -0.5}, "interests": ["rockets", "propulsion", "explosions"],
+           "bio": "Oz makes sugar rockets, jokes constantly and enjoys an audience. He bristles at people who take the fun out of things."},
+  "pia":  {"traits": {"O": 0.5, "C": 0.5, "E": 0.0, "A": 0.8, "N": 0.0}, "interests": ["electronics", "beginners", "teaching"],
+           "bio": "Pia teaches electronics at a community workshop. She wants beginners to feel welcome and dislikes pile-ons."}
+}

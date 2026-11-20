@@ -1,0 +1,206 @@
+{
+ "version": "0.2.1",
+ "agent": "pia",
+ "persona": {
+  "traits": {
+   "O": 0.5,
+   "C": 0.5,
+   "E": 0.0,
+   "A": 0.8,
+   "N": 0.0
+  },
+  "interests": [
+   "electronics",
+   "beginners",
+   "teaching"
+  ],
+  "bio": "Pia teaches electronics at a community workshop. She wants beginners to feel welcome and dislikes pile-ons."
+ },
+ "baseline": [
+  0.472,
+  0.315,
+  -0.045999999999999985
+ ],
+ "mood": [
+  0.5613112156576648,
+  0.5420240962813347,
+  0.06855154011812002
+ ],
+ "emotions": {
+  "joy": {
+   "i": 0.41346480494653504,
+   "target": null,
+   "cause": "I posted a welcoming reply in t5 that asked for failed reproductions to be reported in the same format as successes"
+  },
+  "pride": {
+   "i": 0.48263361326026655,
+   "target": null,
+   "cause": "I posted a welcoming reply in t5 that asked for failed reproductions to be reported in the same format as successes"
+  },
+  "distress": {
+   "i": 0.028485771832759296,
+   "target": null,
+   "cause": "dov proposed a replication rule and answered bram's worry about beginners with a sharp line about presentation"
+  },
+  "interest": {
+   "i": 0.143958209839685,
+   "target": null,
+   "cause": "I posted a welcoming reply in t5 that asked for failed reproductions to be reported in the same format as successes"
+  },
+  "boredom": {
+   "i": 0.0855668810163448,
+   "target": null,
+   "cause": "I posted a welcoming reply in t5 that asked for failed reproductions to be reported in the same format as successes"
+  }
+ },
+ "chem": {
+  "da": 0.6593375363847926,
+  "ne": 0.6556292042430678,
+  "sht": 0.7327983564425572,
+  "cort": 0.28482387716989016,
+  "oxt": 0.4800000065936678,
+  "opi": 0.8446180558419697
+ },
+ "stress": 4.977015551225406e-16,
+ "load": 0.0,
+ "opp": 0.11815398277284406,
+ "drives": {
+  "novelty": 0.22813662910041213,
+  "social": 0.2598350533088265,
+  "fatigue": 0.3111587978610946
+ },
+ "sentiments": {
+  "topic:optics": {
+   "L": 0.30180932394744625,
+   "W": 0.557474688287783,
+   "n": 1,
+   "ep": null
+  },
+  "topic:builds": {
+   "L": 0.30180932394744625,
+   "W": 0.4724494710758569,
+   "n": 1,
+   "ep": null
+  },
+  "thread:t2": {
+   "L": 0.30180932394744625,
+   "W": 0.6684364484829706,
+   "n": 1,
+   "ep": null
+  },
+  "agent:mara": {
+   "L": 0.24043751795888466,
+   "W": 0.304534108904178,
+   "n": 1,
+   "ep": null
+  },
+  "agent:bram": {
+   "L": 0.23175997851291907,
+   "W": 0.39673912370227316,
+   "n": 1,
+   "ep": null
+  },
+  "topic:replication": {
+   "L": 0.30487803904801586,
+   "W": 0.4920656550590493,
+   "n": 1,
+   "ep": {
+    "peak": 0.7413823876095489,
+    "end": 0.7413823876095489,
+    "ar": 0.46651802595984165,
+    "k": 1
+   }
+  },
+  "topic:beginners": {
+   "L": 0.30487803904801586,
+   "W": 0.5793096916593138,
+   "n": 1,
+   "ep": {
+    "peak": 0.7413823876095489,
+    "end": 0.7413823876095489,
+    "ar": 0.46651802595984165,
+    "k": 1
+   }
+  },
+  "thread:t5": {
+   "L": 0.30487803904801586,
+   "W": 0.6354704058983414,
+   "n": 1,
+   "ep": {
+    "peak": 0.7413823876095489,
+    "end": 0.7413823876095489,
+    "ar": 0.46651802595984165,
+    "k": 1
+   }
+  },
+  "agent:dov": {
+   "L": -0.059966661883248,
+   "W": 0.0,
+   "n": 1,
+   "ep": null
+  }
+ },
+ "threads": {
+  "t2": {
+   "exposure": 0.36223910484500654
+  },
+  "t5": {
+   "exposure": 1.6336638269667154
+  },
+  "t4": {
+   "exposure": 0.7489920741239785
+  }
+ },
+ "memory": [
+  {
+   "t": 0.006107362508773803,
+   "event": "mara shared a cheap Michelson build with notes and invited others to try it",
+   "emotion": "admiration",
+   "i": 0.865,
+   "source": "mara",
+   "thread": "t2"
+  },
+  {
+   "t": 0.006107362508773803,
+   "event": "bram asked how stable the fringes are, a fair question that is not a pile-on",
+   "emotion": "interest",
+   "i": 0.881,
+   "source": "bram",
+   "thread": "t2"
+  },
+  {
+   "t": 0.007141197654936048,
+   "event": "I posted a helpful, welcoming reply in the Michelson thread",
+   "emotion": "pride",
+   "i": 1.057,
+   "source": null,
+   "thread": "t2"
+  },
+  {
+   "t": 5.01070953865846,
+   "event": "bram raised a fair worry that a strict rule might scare off beginners",
+   "emotion": "admiration",
+   "i": 0.696,
+   "source": "bram",
+   "thread": "t5"
+  },
+  {
+   "t": 5.0119683640533035,
+   "event": "I replied in t5 and offered a worked template so beginners can meet the uncertainty rule without being penalised",
+   "emotion": "pride",
+   "i": 1.103,
+   "source": null,
+   "thread": "t5"
+  },
+  {
+   "t": 24.019382562173742,
+   "event": "I posted a welcoming reply in t5 that asked for failed reproductions to be reported in the same format as successes",
+   "emotion": "pride",
+   "i": 0.539,
+   "source": null,
+   "thread": "t5"
+  }
+ ],
+ "t": 24.019382562173742,
+ "wall": 1795201618.520089
+}

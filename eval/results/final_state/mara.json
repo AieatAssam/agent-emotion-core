@@ -1,0 +1,190 @@
+{
+ "version": "0.2.1",
+ "agent": "mara",
+ "persona": {
+  "traits": {
+   "O": 0.8,
+   "C": 0.1,
+   "E": 0.6,
+   "A": 0.4,
+   "N": -0.2
+  },
+  "interests": [
+   "optics",
+   "interferometer",
+   "builds"
+  ],
+  "bio": "Mara builds optical instruments from junk and badly wants someone else to try her interferometer design. Generous, enthusiastic, easily sidetracked."
+ },
+ "baseline": [
+  0.4,
+  0.126,
+  0.44899999999999995
+ ],
+ "mood": [
+  0.5540347375192449,
+  0.44647792074517706,
+  0.16911117439087225
+ ],
+ "emotions": {
+  "joy": {
+   "i": 0.559668318801123,
+   "target": null,
+   "cause": "I posted a reply in t2 giving Bram a cheap way to measure fringe stability"
+  },
+  "pride": {
+   "i": 0.6216689515582412,
+   "target": null,
+   "cause": "I posted a reply in t2 giving Bram a cheap way to measure fringe stability"
+  },
+  "interest": {
+   "i": 0.2767118081705361,
+   "target": null,
+   "cause": "I posted a reply in t2 giving Bram a cheap way to measure fringe stability"
+  },
+  "boredom": {
+   "i": 0.08464350388618314,
+   "target": null,
+   "cause": "I posted a reply in t2 giving Bram a cheap way to measure fringe stability"
+  }
+ },
+ "chem": {
+  "da": 0.8091328095876181,
+  "ne": 0.7078097214908219,
+  "sht": 0.7566005980611439,
+  "cort": 0.25838485567147623,
+  "oxt": 0.44000001314046083,
+  "opi": 0.9285495528014287
+ },
+ "stress": 0.0,
+ "load": 0.0,
+ "opp": 0.22524569744371145,
+ "drives": {
+  "novelty": 0.2849699499849449,
+  "social": 0.31169501450121373,
+  "fatigue": 0.31116041475150463
+ },
+ "sentiments": {
+  "topic:electronics": {
+   "L": 0.3064929590995547,
+   "W": 0.45013535080853456,
+   "n": 1,
+   "ep": null
+  },
+  "topic:beginners": {
+   "L": 0.3064929590995547,
+   "W": 0.45013535080853456,
+   "n": 1,
+   "ep": null
+  },
+  "thread:t4": {
+   "L": 0.3064929590995547,
+   "W": 0.5062848017320335,
+   "n": 1,
+   "ep": null
+  },
+  "agent:sam": {
+   "L": 0.12054342236628345,
+   "W": 0.12740279629692633,
+   "n": 1,
+   "ep": null
+  },
+  "topic:optics": {
+   "L": 0.20868491264730124,
+   "W": 0.5885486467770962,
+   "n": 1,
+   "ep": {
+    "peak": 0.9609657525638793,
+    "end": 0.9609657525638793,
+    "ar": 0.562741761483741,
+    "k": 2
+   }
+  },
+  "topic:builds": {
+   "L": 0.20868491264730124,
+   "W": 0.5885486467770962,
+   "n": 1,
+   "ep": {
+    "peak": 0.9609657525638793,
+    "end": 0.9609657525638793,
+    "ar": 0.562741761483741,
+    "k": 2
+   }
+  },
+  "thread:t2": {
+   "L": 0.325422312912203,
+   "W": 0.681549139937168,
+   "n": 1,
+   "ep": {
+    "peak": 0.9609657525638793,
+    "end": 0.9609657525638793,
+    "ar": 0.562741761483741,
+    "k": 2
+   }
+  },
+  "agent:pia": {
+   "L": 0.25794701462596054,
+   "W": 0.3076944562129986,
+   "n": 1,
+   "ep": null
+  },
+  "agent:bram": {
+   "L": 0.2443272273678694,
+   "W": 0.27774354594290435,
+   "n": 1,
+   "ep": null
+  }
+ },
+ "threads": {
+  "t4": {
+   "exposure": 0.3247686571591351
+  },
+  "t2": {
+   "exposure": 2.444975613093851
+  }
+ },
+ "memory": [
+  {
+   "t": 0.006227528121736315,
+   "event": "sam asked a nervous beginner question about a unity-gain buffer oscillating at 1 MHz",
+   "emotion": "interest",
+   "i": 0.85,
+   "source": "sam",
+   "thread": "t4"
+  },
+  {
+   "t": 0.007562460038397049,
+   "event": "I posted a helpful reply to sam explaining the capacitive load fix",
+   "emotion": "pride",
+   "i": 1.143,
+   "source": null,
+   "thread": "t4"
+  },
+  {
+   "t": 5.011041835347811,
+   "event": "pia praised my build and offered to help anyone who tries the interferometer",
+   "emotion": "joy",
+   "i": 1.115,
+   "source": "pia",
+   "thread": "t2"
+  },
+  {
+   "t": 5.011041835347811,
+   "event": "bram asked how stable the fringes are and I have not answered yet",
+   "emotion": "interest",
+   "i": 1.433,
+   "source": "bram",
+   "thread": "t2"
+  },
+  {
+   "t": 24.01972254938549,
+   "event": "I posted a reply in t2 giving Bram a cheap way to measure fringe stability",
+   "emotion": "pride",
+   "i": 0.691,
+   "source": null,
+   "thread": "t2"
+  }
+ ],
+ "t": 24.01972254938549,
+ "wall": 1795201617.8729446
+}

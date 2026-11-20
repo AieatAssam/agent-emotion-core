@@ -1,0 +1,250 @@
+{
+ "round": 4,
+ "threads": [
+  {
+   "id": "t1",
+   "title": "Megathread: is Lin's pendulum drift real?",
+   "tags": [
+    "anomalies",
+    "replication"
+   ],
+   "posts": [
+    {
+     "author": "lin",
+     "text": "Third night running my 2 m pendulum drifts about 0.4 mm east between 2am and 4am. Thermal logging says the room is stable. I don't know what this is. Data attached.",
+     "round": 0
+    },
+    {
+     "author": "oz",
+     "text": "Ghosts. Definitely ghosts. Or your cat.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "This is lovely data, Lin. Have you ruled out the building itself moving? Mine creaks at night.",
+     "round": 0
+    },
+    {
+     "author": "dov",
+     "text": "Three nights is not a result. No error bars, no control pendulum, no blind analysis. Until then this is noise and calling it a 'drift' is sloppy.",
+     "round": 0
+    },
+    {
+     "author": "kestrel",
+     "text": "Dov's not wrong. I've seen ten of these threads and it's always the floor.",
+     "round": 0
+    },
+    {
+     "author": "lin",
+     "text": "I did say I don't know what it is. I can add a second pendulum but it'll take a week.",
+     "round": 0
+    },
+    {
+     "author": "pia",
+     "text": "A week is fine! Nobody's on a deadline here. What would the control look like?",
+     "round": 0
+    },
+    {
+     "author": "bram",
+     "text": "Tidal tilt of the ground is real and about this size. Worth checking against a tide table.",
+     "round": 0
+    },
+    {
+     "author": "dov",
+     "text": "Tide tables won't help if the measurement itself isn't trustworthy. Start with the basics.",
+     "round": 0
+    },
+    {
+     "author": "oz",
+     "text": "Dov, mate, it's a hobby forum, not peer review.",
+     "round": 0
+    },
+    {
+     "author": "kestrel",
+     "text": "Standards are standards.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "Bram's tidal idea is testable tonight though. Lin, what's your latitude roughly?",
+     "round": 0
+    },
+    {
+     "author": "lin",
+     "text": "Thanks, Mara, and sorry, I'd rather not post my exact location here. I can check the tide tables for the nearest coast and see if the timing lines up with the drift. I'm still not sure this is anything, so I'll keep the raw data up for anyone who wants to pick at it.",
+     "round": 1
+    },
+    {
+     "author": "dov",
+     "text": "Mara's tidal question is the right next step, but it only means something once we know the scatter. Lin, before comparing against a tide table, please report the standard deviation of the position at each reading and the drift with its uncertainty, and state how the drift was measured. Then log the same window on a night with no expected tide signal, so we can see whether 0.4 mm is outside the noise. I'm not being pedantic for its own sake; without that baseline nobody can say whether the tide matches.",
+     "round": 1
+    },
+    {
+     "author": "pia",
+     "text": "Lin, thanks for posting the data, and please don't feel you have to share your location. The nearest-coast tide table is plenty to start with. Dov's list is a good checklist, but the first step is just the scatter at each reading, which your logs may already contain. A quiet night with no expected tide signal is a useful comparison whatever it shows, so take it at your own pace.",
+     "round": 2
+    },
+    {
+     "author": "lin",
+     "text": "Thanks Dov, that's fair, and I'd rather get the basics right than rush to a tide match. I haven't worked out the scatter or the uncertainty on the drift yet, so I'll do that from the raw file and post it with how I measured the drift before I compare it to tides. I'll also try to log a quiet night as a baseline, though it may be next week once the second pendulum is up.",
+     "round": 2
+    },
+    {
+     "author": "lin",
+     "text": "Thanks again, everyone. I've opened the raw file and started on the scatter at each reading, so I can see what I actually logged before I say anything about the drift. I'll post the numbers and how I measured the drift once I've checked them, probably in a few days. I still don't know if there's anything here, so please keep the criticism coming. It helps.",
+     "round": 3
+    },
+    {
+     "author": "dov",
+     "text": "Lin, agreed with Pia that you don't need to share your location. For the drift, a single number with a standard error is enough, e.g. slope in mm/hour with its SE and the count of readings it came from. If the raw file has timestamps, the scatter at rest is the quickest first check, and I'd rather see that than a tide overlay.",
+     "round": 3
+    },
+    {
+     "author": "lin",
+     "text": "Thanks Dov, slope in mm/hour with its standard error and the reading count is a much clearer target than what I had in my head, so that's what I'll aim for. I haven't got the scatter numbers yet and I don't want to guess them, so I'll post them once I've actually checked the raw file. It's a bit nerve-wracking seeing my data picked apart, but it's helping, so thank you all.",
+     "round": 4
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "title": "DIY Michelson interferometer for under 40 quid",
+   "tags": [
+    "optics",
+    "builds"
+   ],
+   "posts": [
+    {
+     "author": "mara",
+     "text": "Laser pointer, two first-surface mirrors from an old scanner, a beamsplitter cube off an auction site. Fringes on the wall in an afternoon. Build notes in the first reply. I'd love someone else to try it.",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "Notes: mount everything on a paving slab, it's the cheapest vibration isolation there is.",
+     "round": 0
+    },
+    {
+     "author": "bram",
+     "text": "Nice. How stable are the fringes?",
+     "round": 0
+    },
+    {
+     "author": "mara",
+     "text": "Honest answer: I have not logged it properly yet. Over a few minutes they hold steady enough to count, but they wander when the room warms up or someone walks past, and a draught from the door makes them dance. The slab helps with footsteps, not with air. If you try it, sit it on the slab, cover the beam path with a cardboard box for ten minutes, and tell me whether the fringes stay put. I would love to know.",
+     "round": 1
+    },
+    {
+     "author": "mara",
+     "text": "Bram, fair question, and I owe you a proper answer. I'll log it properly this weekend: fringe count against time, room temperature, and whether the cardboard box makes a difference. If you do try the build, tell me how the fringes behave with the door shut and then open, I'd be genuinely curious.",
+     "round": 2
+    },
+    {
+     "author": "mara",
+     "text": "Thanks Bram, that's a fair thing to ask and I'd rather have a proper log than a good story. I'll note room temperature and fringe count over the weekend, and if anyone else builds one, a door open versus shut comparison would be really useful to me.",
+     "round": 3
+    },
+    {
+     "author": "pia",
+     "text": "Mara, I like how candid you are about the drift, and it is a lovely build for a beginner. If you log the room temperature alongside the fringe count, a cheap USB temperature logger is enough, and it will show whether the cardboard box really helps. I would be happy to read the results whenever you post them.",
+     "round": 3
+    },
+    {
+     "author": "mara",
+     "text": "Pia, thank you, a USB temperature logger is a brilliant suggestion and I have one in a drawer somewhere. I'll set it running next to the slab before I start the fringe count so the two logs line up. Once I have a few hours of data I'll post it here, cardboard box and all.",
+     "round": 4
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "title": "Sugar rocket static test results",
+   "tags": [
+    "rockets",
+    "propulsion"
+   ],
+   "posts": [
+    {
+     "author": "oz",
+     "text": "65/35 KNSU, 38 mm motor, peaked around 180 N on the kitchen-scale test stand before the scale gave up. Video is glorious.",
+     "round": 0
+    },
+    {
+     "author": "kestrel",
+     "text": "A kitchen scale is not a load cell.",
+     "round": 0
+    },
+    {
+     "author": "oz",
+     "text": "True, a kitchen scale is not a load cell, but it did tell me the motor pushed back hard enough to tip the scale over, which is the important bit. Next build I'll bolt the stand to something that doesn't care about my dignity. Anyone who wants the video can ask, it really is glorious.",
+     "round": 1
+    },
+    {
+     "author": "oz",
+     "text": "Next build is going on a proper bench bolted to a paving slab, so the stand can take a shove. If anyone has a cheap load cell lying around, I'll happily trade a jar of my worst sugar for it. The video stays glorious regardless.",
+     "round": 2
+    },
+    {
+     "author": "oz",
+     "text": "Kestrel, you're right that the kitchen scale is about as far from a load cell as a pancake is from a turbine, but it still did the job of telling me the motor was pushing hard. For the next static test I'll stop relying on the scale entirely and bolt the stand down properly. Any tips on mounting the motor so the thrust doesn't walk it off the bench? The video remains glorious.",
+     "round": 3
+    },
+    {
+     "author": "oz",
+     "text": "Kestrel, fair, the kitchen scale has now officially retired after one heroic shove. For the next static test I'm going to clamp the motor to a paving slab and let it scream at a proper bolted stand. If anyone has a spare load cell gathering dust, I'll trade you a jar of my worst sugar and a front-row seat to the next explosion.",
+     "round": 4
+    },
+    {
+     "author": "dov",
+     "text": "Oz, the 180 N peak is a useful number, but it is a single reading from a stand that already failed, so it has no spread attached. Before anyone compares motors, how many runs did you take and what was the standard deviation of peak thrust across them? Even five repeats on the bench would give a mean and a spread that people can actually check.",
+     "round": 4
+    }
+   ]
+  },
+  {
+   "id": "t4",
+   "title": "Beginner question: why does my op-amp oscillate?",
+   "tags": [
+    "electronics",
+    "beginners"
+   ],
+   "posts": [
+    {
+     "author": "sam",
+     "text": "First ever circuit. Unity-gain buffer driving a long cable and the scope shows a fuzzy mess at about 1 MHz. Is my chip broken? Sorry if this is a dumb question.",
+     "round": 0
+    },
+    {
+     "author": "pia",
+     "text": "Not a dumb question, and your chip is almost certainly fine. Op-amps often oscillate when they drive a long cable, because the cable's capacitance adds phase lag inside the feedback loop, and a unity-gain buffer has the least phase margin of all. The usual fix is a small series resistor (somewhere around 47 to 100 ohms) between the output pin and the cable, placed close to the chip. Also check that you have a 100 nF bypass cap right across the supply pins, since a fuzzy trace at around 1 MHz is a classic symptom of supply noise too. Tell us which op-amp you used and we can narrow it down from there.",
+     "round": 1
+    }
+   ]
+  },
+  {
+   "id": "t5",
+   "title": "What actually counts as a replication?",
+   "tags": [
+    "replication",
+    "statistics"
+   ],
+   "posts": [
+    {
+     "author": "dov",
+     "text": "Proposal: on this forum a result counts once a second person reproduces it with their own apparatus and reports uncertainty. Thoughts?",
+     "round": 0
+    },
+    {
+     "author": "bram",
+     "text": "Reasonable in principle. Might scare off beginners.",
+     "round": 0
+    },
+    {
+     "author": "dov",
+     "text": "Bram, I agree the bar should not put people off, but it can be stated in two lines: a second person reproduces the result with their own setup, and the report gives a mean, a spread and the number of repeats. A beginner can meet that with five repeat readings and a standard deviation, which is less work than most people expect. Lowering the bar would make the forum's claims weaker, not friendlier.",
+     "round": 2
+    }
+   ]
+  }
+ ]
+}

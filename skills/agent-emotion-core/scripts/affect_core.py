@@ -19,16 +19,21 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+try:
+    import fcntl
+except ImportError:  # Windows: no advisory locking, single-writer only
+    fcntl = None
 import importlib.util
 import json
 import math
 import os
 import random
+import re
 import sys
 import time
 from pathlib import Path
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 
 # name: (P, A, D, half_life_hours, valence)
 # PAD coordinates follow the OCC->PAD mapping used in ALMA (approximate);
@@ -156,10 +161,21 @@ DEFAULTS = {
 }
 
 TRAITS = ("O", "C", "E", "A", "N")
+TRAIT_NAMES = {"openness": "O", "conscientiousness": "C", "extraversion": "E",
+               "agreeableness": "A", "neuroticism": "N"}
 
 
 def clamp(x, lo=-1.0, hi=1.0):
     return max(lo, min(hi, float(x)))
+
+
+def num(d, key, default, lo=-1.0, hi=1.0):
+    """Read a number from untrusted input: bad, missing or non-finite -> default."""
+    try:
+        x = float(d.get(key, default))
+    except (TypeError, ValueError):
+        return default
+    return clamp(x, lo, hi) if math.isfinite(x) else default
 
 
 def _word(i):
@@ -203,7 +219,14 @@ class EmotionalCore:
             self.s = state
         else:
             p = persona or random_persona(agent, seed)
-            traits = {k: clamp(p.get("traits", {}).get(k, 0)) for k in TRAITS}
+            raw = p.get("traits") if isinstance(p.get("traits"), dict) else {}
+            raw = {TRAIT_NAMES.get(str(k).lower(), str(k).upper()): v for k, v in raw.items()}
+            unknown = sorted(set(raw) - set(TRAITS))
+            if unknown:
+                raise ValueError(f"unknown personality traits {unknown}; use O, C, E, A, N "
+                                 "(or openness, conscientiousness, extraversion, "
+                                 "agreeableness, neuroticism), each -1..1")
+            traits = {k: num(raw, k, 0.0) for k in TRAITS}
             base = baseline_from_traits(traits)
             self.s = {
                 "version": VERSION, "agent": agent,
@@ -432,16 +455,19 @@ class EmotionalCore:
         """
         ap = self._run("pre_appraise", dict(ap))
         s, t, ch = self.s, self.traits, self.s["chem"]
-        rel = clamp(ap.get("relevance", 0.5), 0, 1)
-        cong = clamp(ap.get("congruence", 0.0))
-        nov = clamp(ap.get("novelty", 0.3), 0, 1)
-        praise = clamp(ap.get("praiseworthiness", 0.0))
-        control = clamp(ap.get("control", 0.5), 0, 1)
-        cert = clamp(ap.get("certainty", 1.0), 0, 1)
-        agency = ap.get("agency", "circumstance")
+        rel = num(ap, "relevance", 0.5, 0, 1)
+        cong = num(ap, "congruence", 0.0)
+        nov = num(ap, "novelty", 0.3, 0, 1)
+        praise = num(ap, "praiseworthiness", 0.0)
+        control = num(ap, "control", 0.5, 0, 1)
+        cert = num(ap, "certainty", 1.0, 0, 1)
+        agency = ap.get("agency") if ap.get("agency") in ("self", "other") else "circumstance"
         src, th = ap.get("source"), ap.get("thread")
+        src = str(src) if src not in (None, "", s["agent"]) else None
         th = str(th) if th is not None else None
-        topics = [str(x).lower() for x in ap.get("topics", [])]
+        tp = ap.get("topics") or []
+        tp = [tp] if isinstance(tp, str) else (tp if isinstance(tp, list) else [])
+        topics = [x.strip().lower()[:60] for x in tp if isinstance(x, str) and x.strip()][:8]
         aff = self.affinity(src) if src else 0.0
         hab = self.habituation(th) if th else 0.0
         nov_eff = nov * (1 - 0.6 * hab)
@@ -490,7 +516,7 @@ class EmotionalCore:
         add("surprise", (nov_eff - 0.4) * 1.2)
         add("interest", nov_eff * (0.4 + 0.6 * control) * (0.8 + 0.3 * t["O"])
             * (1 + 0.5 * self.dev("da") - 0.5 * s["load"]))
-        add("boredom", (1 - nov) * (1 - rel) * 0.6 + 0.4 * hab)
+        add("boredom", (1 - nov) * (1 - rel) * 0.6 + 0.5 * max(0.0, hab - 0.3))
         # Modulation by trait, mood and neurochemistry.
         P = s["mood"][0]
         transfer = 1 + 0.5 * max(0.0, self.dev("ne"))   # excitation transfer (Zillmann 1971)
@@ -506,12 +532,18 @@ class EmotionalCore:
                 g *= 1 + 0.8 * max(0.0, self.dev("cort")) + 0.6 * low_sht + 0.5 * s["load"]
             if name == "anger":
                 g *= 1 + 0.8 * low_sht               # low serotonin, short fuse
-            out[name] = min(1.0, out[name] * max(0.0, g))
+            x = out[name] * max(0.0, g)
+            # Stacked gains saturate softly instead of pinning at the ceiling.
+            out[name] = x if x <= 0.6 else 0.6 + 0.4 * math.tanh((x - 0.6) / 0.4)
+        # Boredom does not coexist with being strongly moved by something.
+        if "boredom" in out:
+            out["boredom"] *= 1 - max((v for k, v in out.items() if k != "boredom"), default=0.0)
         # Emotional contagion (Hatfield et al. 1994), stronger from liked sources.
-        pe = ap.get("perceived_emotion") or {}
+        pe = ap.get("perceived_emotion")
+        pe = pe if isinstance(pe, dict) else {}
         if pe.get("label") in EMOTIONS:
-            susc = clamp(0.25 + 0.15 * t["A"] + 0.10 * t["N"], 0, 1) * (0.5 + 0.5 * aff)
-            add(pe["label"], clamp(pe.get("intensity", 0.5), 0, 1) * susc)
+            susc = clamp(0.40 + 0.15 * t["A"] + 0.10 * t["N"], 0, 1) * (0.6 + 0.4 * aff)
+            add(pe["label"], num(pe, "intensity", 0.5, 0, 1) * susc)
         # Transition inertia: a strong current emotion resists its opposite and
         # is itself dented by it (valence-consistent transitions are likelier).
         cur = [(e["i"], n) for n, e in s["emotions"].items()
@@ -530,7 +562,9 @@ class EmotionalCore:
         for name, x in out.items():
             e = s["emotions"].setdefault(name, {"i": 0.0, "target": None, "cause": ""})
             if x >= 0.5 * e["i"]:
-                e["target"], e["cause"] = src, cause
+                # Only emotions about someone's conduct are directed at them.
+                directed = name in ("anger", "reproach", "admiration", "gratitude")
+                e["target"], e["cause"] = (src if directed else None), cause
             e["i"] = 1 - (1 - e["i"]) * (1 - x)
         for i in range(3):
             s["mood"][i] = clamp(s["mood"][i] + self.cfg["mood_nudge"]
@@ -575,7 +609,7 @@ class EmotionalCore:
         if src:
             s["drives"]["social"] *= 0.9
         if th:
-            s["threads"].setdefault(th, {"exposure": 0.0})["exposure"] += 0.5
+            s["threads"].setdefault(th, {"exposure": 0.0})["exposure"] += 0.15
         s["drives"]["novelty"] = clamp(s["drives"]["novelty"] - 0.3 * nov_eff, 0, 1)
         # Emotion-tagged episodic memory; arousal and stress hormones at
         # encoding strengthen it (McGaugh 2004).
@@ -598,12 +632,13 @@ class EmotionalCore:
 
     # ---- attention: where to go next ---------------------------------------
     def _topic_match(self, th):
-        if "topic_match" in th:
-            return clamp(th["topic_match"], 0, 1)
+        if th.get("topic_match") is not None:
+            return num(th, "topic_match", 0.5, 0, 1)
         ints = [w.lower() for w in self.s["persona"]["interests"]]
         if not ints:
             return 0.5
-        text = (th.get("title", "") + " " + " ".join(th.get("tags", []))).lower()
+        tags = th.get("tags") if isinstance(th.get("tags"), list) else []
+        text = (str(th.get("title") or "") + " " + " ".join(map(str, tags))).lower()
         hits = sum(1 for w in ints if w in text)
         return 0.3 if hits == 0 else min(1.0, 0.6 + 0.2 * hits)
 
@@ -611,7 +646,9 @@ class EmotionalCore:
         """Pick reply / new_thread / skip by sampling a softmax over affective
         utility. threads: [{id, title?, tags?, topic_match?, recent_posts?,
         n_posts?, participants?, last_activity_hours?}]"""
-        threads = self._run("pre_choose", list(threads))
+        threads = [th for th in (threads or []) if isinstance(th, dict) and th.get("id") is not None]
+        threads = list({str(th["id"]): th for th in threads}.values())   # drop duplicate ids
+        threads = self._run("pre_choose", threads)
         rng = rng or random.Random()
         s, t, d = self.s, self.traits, self.s["drives"]
         P, A, D = s["mood"]
@@ -621,10 +658,12 @@ class EmotionalCore:
         for th in threads:
             tid = str(th["id"])
             hab = self.habituation(tid)
-            crowd = 1 - math.exp(-th.get("recent_posts", th.get("n_posts", 0)) / 15.0)
-            parts = [p for p in th.get("participants", []) if p != s["agent"]]
+            crowd = 1 - math.exp(-num(th, "recent_posts", num(th, "n_posts", 0, 0, 1e6), 0, 1e6) / 15.0)
+            parts = th.get("participants") if isinstance(th.get("participants"), list) else []
+            parts = [p for p in parts if isinstance(p, str) and p != s["agent"]]
             affs = [self.affinity(p) for p in parts]
-            keys = [f"thread:{tid}"] + [f"topic:{str(x).lower()}" for x in th.get("tags", [])]
+            tags = th.get("tags") if isinstance(th.get("tags"), list) else []
+            keys = [f"thread:{tid}"] + [f"topic:{x.strip().lower()}" for x in tags if isinstance(x, str)]
             tl = [self.liking(k) for k in keys[1:]]
             c = {
                 "topic interest": 1.2 * self._topic_match(th) + 0.8 * (sum(tl) / len(tl) if tl else 0),
@@ -635,7 +674,7 @@ class EmotionalCore:
                 "people I like here": 0.8 * (sum(affs) / len(affs) if affs else 0)
                                       * (0.5 + d["social"]) * (1 + max(0.0, oxt)),
                 "how it felt last time": 0.6 * self.liking(keys[0]),
-                "stale": -0.3 * min(1.0, th.get("last_activity_hours", 0) / 48.0),
+                "stale": -0.3 * min(1.0, num(th, "last_activity_hours", 0, 0, 1e6) / 48.0),
             }
             if affs and min(affs) < -0.3:
                 foe = parts[affs.index(min(affs))]
@@ -761,7 +800,7 @@ class EmotionalCore:
             if table[k] and k not in used:
                 b.append(text)
                 used.add(k)
-        if self.dev("ne") > 0.35:
+        if self.dev("ne") > 0.42:
             b.append("too wound up to focus well")   # inverted-U of arousal
         if s["load"] > 0.15:
             b.append("worn down by sustained stress")
@@ -783,9 +822,11 @@ class EmotionalCore:
                 continue
             label = name if kind == "topic" else f"thread {name}"
             ph = self.interest_phase(key) if kind == "topic" else None
-            if L >= 0.2:
+            # One encounter is an impression, not yet a taste, unless it was strong.
+            bar = 0.2 if rec["n"] >= 1 else 0.35
+            if L >= bar:
                 likes.append((L, f"{label} ({ph})" if ph else label))
-            elif L <= -0.2:
+            elif L <= -bar:
                 dislikes.append((-L, label))
             if rec["W"] > 0.4 and L < 0.1:
                 pulls.append((rec["W"], label))
@@ -912,11 +953,14 @@ def log(core, path, record):
 
 # ---- CLI --------------------------------------------------------------------
 def _read_json(arg):
-    if arg in (None, "-"):
-        return json.load(sys.stdin)
-    if os.path.exists(arg):
-        return json.loads(Path(arg).read_text())
-    return json.loads(arg)
+    try:
+        if arg in (None, "-"):
+            return json.load(sys.stdin)
+        if len(arg) < 4096 and os.path.exists(arg):
+            return json.loads(Path(arg).read_text())
+        return json.loads(arg)
+    except ValueError as e:
+        sys.exit(f"affect_core: --json is not valid JSON ({e})")
 
 
 def main(argv=None):
@@ -936,8 +980,22 @@ def main(argv=None):
     a = ap.parse_args(argv)
     if not a.agent:
         ap.error("--agent or AFFECT_AGENT is required")
+    if not re.fullmatch(r"[A-Za-z0-9_.-]{1,64}", a.agent) or a.agent.startswith("."):
+        ap.error("agent id must be 1-64 characters from A-Z a-z 0-9 _ . - and not start with a dot")
+    if a.hours is not None and not (0 <= a.hours < 1e7):
+        ap.error("--hours must be zero or positive")
     persona = _read_json(a.persona) if a.persona else None
-    core = load(a.agent, a.state_dir, seed=a.seed, persona=persona)
+    d = state_dir(a.state_dir)
+    d.mkdir(parents=True, exist_ok=True)
+    lock = open(d / f".{a.agent}.lock", "w")
+    if fcntl:
+        fcntl.flock(lock, fcntl.LOCK_EX)   # serialise concurrent commands for one agent
+    if a.cmd == "init" and persona is not None and (d / f"{a.agent}.json").exists():
+        sys.exit(f"affect_core: {a.agent} already exists; delete {d / (a.agent + '.json')} to start over")
+    try:
+        core = load(a.agent, a.state_dir, seed=a.seed, persona=persona)
+    except ValueError as e:
+        sys.exit(f"affect_core: {e}")
     now = time.time()
     if a.hours is not None:
         core.advance(a.hours)
@@ -949,8 +1007,13 @@ def main(argv=None):
         print(core.context([x for x in a.with_agents.split(",") if x]))
     elif a.cmd == "appraise":
         data = _read_json(a.json)
+        data = data if isinstance(data, list) else [data]
+        if not all(isinstance(x, dict) and isinstance(x.get("event"), str) and x["event"].strip()
+                   for x in data):
+            sys.exit('affect_core: appraise expects an object (or array of objects) each with '
+                     'a non-empty "event" string')
         res = []
-        for x in (data if isinstance(data, list) else [data]):
+        for x in data:
             out = core.appraise(x)
             res.append(out)
             log(core, a.state_dir, {"type": "appraise", "event": x.get("event"),
@@ -961,11 +1024,17 @@ def main(argv=None):
         print(json.dumps(res))
     elif a.cmd == "choose":
         rng = random.Random(a.seed) if a.seed is not None else None
-        dec = core.choose(_read_json(a.json), rng=rng)
+        ths = _read_json(a.json)
+        if not isinstance(ths, list):
+            sys.exit("affect_core: choose expects a JSON array of thread objects")
+        dec = core.choose(ths, rng=rng)
         log(core, a.state_dir, {"type": "choose", "t": round(core.s["t"], 2), **dec})
         print(json.dumps(dec))
     elif a.cmd == "acted":
         core.acted(a.kind, a.thread)
+        log(core, a.state_dir, {"type": "acted", "t": round(core.s["t"], 2), "kind": a.kind,
+                                "thread": a.thread})
+        print(json.dumps({"ok": True, "kind": a.kind, "thread": a.thread}))
     elif a.cmd == "consolidate":
         ch = core.consolidate()
         log(core, a.state_dir, {"type": "consolidate", "t": round(core.s["t"], 2), "changed": ch})
