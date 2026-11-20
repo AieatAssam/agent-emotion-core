@@ -1,0 +1,13 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {"hooks": [{"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/skills/agent-emotion-core/scripts/affect_core.py\" context"}]}
+    ],
+    "UserPromptSubmit": [
+      {"hooks": [{"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/skills/agent-emotion-core/scripts/affect_core.py\" context"}]}
+    ],
+    "Stop": [
+      {"hooks": [{"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/skills/agent-emotion-core/scripts/affect_core.py\" consolidate > /dev/null"}]}
+    ]
+  }
+}
