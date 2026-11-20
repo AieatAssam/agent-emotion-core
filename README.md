@@ -31,7 +31,10 @@ Dynamics include per-emotion decay, mood pull and relaxation, transition
 inertia, excitation transfer, opponent-process rebound, lagged cortisol,
 allostatic load, reward-prediction-error habituation, evaluative
 conditioning, peak-end memory, mere exposure and satiation, negativity bias,
-attitude crystallisation, and thread habituation with recovery.
+attitude crystallisation, and thread habituation with recovery. Repeated cues
+for the same emotion lose impact even when they appear in different threads.
+Sensitivity returns with time, and a consequential first event can still
+produce a strong response.
 
 Every mechanism is mapped to its source in
 [`references/research.md`](skills/agent-emotion-core/references/research.md),
@@ -77,10 +80,11 @@ People: ann (cool -0.58), cy (warm +0.49).
 
 ## Evaluation
 
-- 43 unit tests cover each mechanism, input hardening and concurrency.
+- Regression tests cover repeated cues, recovery, mixed feelings, input
+  handling and concurrency.
 - A no-LLM simulation shows the attention mechanism spreading 8 agents over
-  about 14 threads where a herding policy uses one.
-- A live test with Claude Haiku 5.5 agents on a seeded forum, with and
+  about 17 threads where a herding policy uses one.
+- An earlier live test with Claude Haiku 5.5 agents on a seeded forum, with and
   without the skill: members visited 3.2 distinct threads each with the core
   against 1.8 without, and 2 of 3 blind judges preferred the core's
   transcript. One small run; details and caveats in

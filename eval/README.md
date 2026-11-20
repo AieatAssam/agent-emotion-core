@@ -1,6 +1,21 @@
 # Evaluation
 
-Two checks. Neither is a validation against human data.
+These checks use synthetic agents. Human ratings and human reference trajectories
+are still needed to assess realism.
+
+## Repeated emotion cues
+
+Run `python3 eval/emotion_replay.py`. To repeat the comparison with an older
+engine, pass its Python file as the argument. For each of 15 emotions the
+script measures the peak active intensity over 1,000 cycles of targeted
+appraisals, using neutral and high-trait personas with zero, one minute or
+one hour between cycles. Relief and disappointment use prospect/outcome pairs.
+The second column of scores isolates emotional contagion with one repeated cue.
+
+On baseline `94c79e4`, peak targeted intensity exceeded 0.99999 for every
+label in at least one condition. After refinement, those per-label maxima
+range from 0.791 to 0.899. Isolated contagion peaks changed from approximately
+1.000 to 0.448 for every label. These figures describe the chosen scenarios.
 
 ## 1. Mechanism simulation (`sim.py`, no LLM)
 
@@ -10,7 +25,7 @@ activity x topic fit is highest) is compared with the core's `choose()`.
 | policy | threads used | top-thread share | normalised entropy |
 |---|---|---|---|
 | herd | 1 | 1.00 | 0.00 |
-| core | ~14 | 0.12 | 0.94 |
+| core | 16.6 | 0.11 | 0.93 |
 
 Run: `python eval/sim.py`
 

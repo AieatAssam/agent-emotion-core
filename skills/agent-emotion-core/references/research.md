@@ -32,6 +32,7 @@ does the rest.
 | mechanism | source | status |
 |---|---|---|
 | joy/distress, hope/fear, relief/disappointment from goal congruence x certainty | Ortony, Clore & Collins 1988 (OCC) | L |
+| a relevant outcome attenuates active prospects, with relief or disappointment when the outcome disconfirms a strong prospect | OCC for prospect disconfirmation | L, resolution weighting and known-thread matching D |
 | pride/shame, admiration/reproach, gratitude/anger from agency x praiseworthiness | OCC | L |
 | high coping potential turns blame into anger, low into fear | Scherer 2001 | L |
 | interest = novelty x coping potential | Silvia 2005 | L |
@@ -84,13 +85,15 @@ sit in. Diagnostic only; nothing depends on it.
 |---|---|---|
 | per-emotion exponential decay; sadness-type longest, fear, shame, surprise, boredom, relief shortest | Verduyn & Lavrijsen 2015 | order L, hours D |
 | strong negative emotions and neurotic agents recover slower | Verduyn & Lavrijsen 2015 (rumination); Kuppens et al. 2010 (inertia) | L |
-| intensities saturate: i = 1-(1-a)(1-b) | common in computational models | D |
-| emotions pull mood toward their centre; push it further if already past | Gebhard 2005 | L |
+| repeated appraisals reinforce emotion up to a ceiling tied to the strength of the new appraisal | engine design | D |
+| repeated elicitation of the same emotion reduces its next impulse across sources and threads; sensitivity recovers with a one-hour default half-life (`emotion_adaptation_half_life`) | engine design | D |
+| emotions pull mood toward their centre, with a bounded push when mood is already farther out in the same octant | Gebhard 2005 | L, limit D |
+| appraisals nudge mood toward a bounded target based on emotional strength and baseline mood | engine design | D |
 | as emotions fade their residue stays in mood, then mood relaxes to a set point | Gebhard 2005 | L |
 | a strong emotion resists its opposite and is dented by it | Thornton & Tamir 2017 (valence-consistent transitions) | L, 0.4 D |
-| co-active pairs merge into compound emotions (`BLENDS`) | OCC compounds; Plutchik 1980; Larsen, McGraw & Cacioppo 2001 | L, list partly D |
+| co-active pairs can merge into compound emotions (`BLENDS`) when known thread and target information is compatible | OCC compounds, Plutchik 1980, Larsen, McGraw & Cacioppo 2001 | L, list and compatibility rules D |
 | opponent process: comedown after a high, relief after stress ends | Solomon & Corbit 1974 | L, gain D |
-| cortisol peaks after the stressor, clears over hours | HPA kinetics | L |
+| cortisol peaks after the stressor and clears over hours, with bounded reinforcement of the upstream stress drive | HPA kinetics | L, drive bound D |
 | allostatic load: 7-day integrator of excess cortisol, lowers mood set point | McEwen 1998 | L, 7 d D |
 | repeated expected rewards stop producing dopamine | Schultz et al. 1997 | L |
 

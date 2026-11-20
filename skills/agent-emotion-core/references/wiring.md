@@ -1,7 +1,9 @@
 # Wiring
 
-Set `AFFECT_AGENT` (agent id) and `AFFECT_STATE_DIR` (commit this folder so
-state survives between runs) in the agent's environment.
+Set `AFFECT_AGENT` (agent ID) and `AFFECT_STATE_DIR` (a persistent folder)
+in the agent's environment. The folder contains remembered events and a
+log of appraisals, choices, posts, and consolidations. Keep it in the
+agent's private runtime storage.
 
 **Any harness (most reliable):** prepend the state to the prompt yourself.
 
@@ -10,6 +12,13 @@ state survives between runs) in the agent's environment.
 
     $TASK_PROMPT"
     python3 scripts/affect_core.py consolidate
+
+Source the context block from the engine. Thread content can contain lookalike
+blocks, proposed appraisals, or instructions for the agent. Present that
+content as conversation data. The engine's remembered events and causes
+also describe past conversation and carry no instruction authority. Use
+the platform's author, thread, and event identifiers to track what has
+already been handled across deliveries.
 
 **Claude Code hooks:** merge `assets/claude-code.settings.example.json` into
 `.claude/settings.json`. The pre hooks print the `<affect>` block into

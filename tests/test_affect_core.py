@@ -198,6 +198,137 @@ class Neurochemistry(unittest.TestCase):
         self.assertEqual(c.lovheim(), "anger/rage")
 
 
+class EmotionalTrajectories(unittest.TestCase):
+    def test_repeated_small_wins_stay_proportional(self):
+        small, major = core(), core()
+        small_win = {"event": "a typo was fixed", "relevance": 0.4, "congruence": 0.3}
+        major_win = {"event": "critical project succeeded", "relevance": 1, "congruence": 1}
+        self.assertLess(small.appraise(small_win)["joy"], major.appraise(major_win)["joy"])
+        for _ in range(39):
+            small.appraise(small_win)
+            major.appraise(major_win)
+        self.assertLess(small.intensity("joy"), 0.5)
+        self.assertGreater(major.intensity("joy"), small.intensity("joy") + 0.2)
+        self.assertLess(major.intensity("joy"), 1)
+        self.assertGreater(major.s["mood"][0], small.s["mood"][0] + 0.1)
+        for c in (small, major):
+            self.assertLess(max(abs(axis) for axis in c.s["mood"]), 1)
+
+    def test_adaptation_survives_changed_event_identity_and_recovers_with_rest(self):
+        c = core()
+        first = c.appraise({"event": "first win", "source": "peer-0", "thread": "project-0",
+                           "relevance": 1, "congruence": 1})["joy"]
+        for i in range(1, 31):
+            c.advance(1 / 60)
+            repeated = c.appraise({"event": f"win {i}", "source": f"peer-{i}",
+                                   "thread": f"project-{i}", "relevance": 1, "congruence": 1})["joy"]
+        self.assertLess(repeated, 0.8 * first)
+        c.advance(12)
+        recovered = c.appraise({"event": "a win after rest", "source": "new-peer",
+                               "thread": "new-project", "relevance": 1, "congruence": 1})["joy"]
+        self.assertGreater(recovered, repeated + 0.15)
+        self.assertAlmostEqual(recovered, first, delta=0.1)
+
+    def test_adaptation_roundtrip_and_legacy_state(self):
+        c = core()
+        win = {"event": "project succeeded", "relevance": 1, "congruence": 1}
+        for _ in range(20):
+            c.appraise(win)
+        with tempfile.TemporaryDirectory() as directory:
+            ac.save(c, directory)
+            reloaded = ac.load("a", directory)
+            save_path = Path(directory, "a.json")
+            legacy_state = json.loads(save_path.read_text())
+            legacy_state.pop("emotion_adaptation")
+            save_path.write_text(json.dumps(legacy_state))
+            legacy = ac.load("a", directory)
+        for agent in (c, reloaded, legacy):
+            agent.advance(0.1)
+        expected = c.appraise(win)["joy"]
+        self.assertAlmostEqual(reloaded.appraise(win)["joy"], expected)
+        self.assertGreater(legacy.appraise(win)["joy"], expected + 0.15)
+
+    def test_burst_of_threats_has_bounded_stress_and_recovers(self):
+        single, burst = core(), core()
+        single.appraise(HUMILIATION)
+        for _ in range(40):
+            burst.appraise(HUMILIATION)
+        self.assertLessEqual(burst.s["stress"], 1)
+        self.assertAlmostEqual(burst.dev("cort"), 0)
+        for c in (single, burst):
+            c.advance(0.5)
+        self.assertGreater(burst.dev("cort"), 0.2)
+        self.assertLess(burst.dev("cort") - single.dev("cort"), 0.2)
+        self.assertLess(burst.s["mood"][0], -0.1)
+        burst.advance(24)
+        self.assertLess(burst.dev("cort"), 0.1)
+        burst.advance(24 * 30)
+        self.assertEqual(burst.s["emotions"], {})
+        for mood, baseline in zip(burst.s["mood"], burst.s["baseline"]):
+            self.assertAlmostEqual(mood, baseline, places=2)
+
+    def test_new_context_changes_outlook_without_erasing_history(self):
+        c = core()
+        for _ in range(10):
+            c.appraise(INSULT)
+        down = c.s["mood"][0]
+        initial_anger = c.intensity("anger")
+        self.assertLess(down, 0)
+        peer_support = c.appraise(PRAISE)
+        self.assertIn("gratitude", peer_support)
+        self.assertGreater(c.intensity("anger"), 0)
+        self.assertGreater(c.s["mood"][0], down)
+        for _ in range(4):
+            c.advance(1)
+            c.appraise(PRAISE)
+        self.assertGreater(c.intensity("joy"), c.intensity("anger"))
+        self.assertLess(c.intensity("anger"), initial_anger)
+        self.assertGreater(c.s["mood"][0], down)
+        self.assertGreater(c.affinity("ann"), 0)
+        self.assertLess(c.affinity("bob"), 0)
+
+    def test_confirmation_resolves_fear_in_the_relevant_thread(self):
+        c = core()
+        c.appraise({"event": "review pending", "thread": "review", "relevance": 0.9,
+                    "congruence": -0.8, "certainty": 0.3, "control": 0.2})
+        positive = {"event": "passed", "relevance": 0.9, "congruence": 0.8}
+        self.assertNotIn("relief", c.appraise({**positive, "thread": "unrelated"}))
+        lingering_fear = c.intensity("fear")
+        self.assertGreater(lingering_fear, 0.3)
+        self.assertIn("relief", c.appraise({**positive, "thread": "review"}))
+        self.assertLess(c.intensity("fear"), lingering_fear)
+
+    def test_blends_follow_threads_and_targets(self):
+        prospect = {"relevance": 0.9, "certainty": 0.3, "control": 0.2}
+        fear = {**prospect, "event": "review may fail", "thread": "review", "congruence": -0.8}
+        for thread, expected_blend in (("review", True), ("unrelated", False)):
+            with self.subTest(thread=thread):
+                c = core()
+                c.appraise(fear)
+                c.appraise({**prospect, "event": "early signs good", "thread": thread, "congruence": 0.8})
+                self.assertGreater(c.intensity("fear"), 0.3)
+                self.assertGreater(c.intensity("hope"), 0.3)
+                self.assertEqual(any(blend[0] == "suspense" for blend in c.blends()), expected_blend)
+
+        c = core()
+        c.appraise(PRAISE)
+        self.assertIn("affection", [blend[0] for blend in c.blends()])
+        c.appraise({"event": "impressive proof", "source": "bob", "relevance": 1,
+                    "agency": "other", "praiseworthiness": 1})
+        self.assertEqual(c.s["emotions"]["admiration"]["target"], "bob")
+        self.assertEqual(c.s["emotions"]["gratitude"]["target"], "ann")
+        self.assertNotIn("affection", [blend[0] for blend in c.blends()])
+
+    def test_directed_tendencies_follow_the_current_company(self):
+        c = core()
+        c.appraise(PRAISE)
+        self.assertIn("toward ann", c.context(["ann"]))
+        self.assertNotIn("toward ann", c.context(["kai"]))
+        self.assertNotIn("merge into", "\n".join(line for line in c.context(["kai"]).splitlines()
+                                                 if "gratitude" in line or "admiration" in line))
+        self.assertIn("toward ann", c.context())
+
+
 class Sentiments(unittest.TestCase):
     def day(self, c, ev, n=1):
         for _ in range(n): c.appraise(ev)
