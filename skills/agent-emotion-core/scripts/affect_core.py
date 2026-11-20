@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Copyright 2026 Aieat Assam
+# SPDX-License-Identifier: Apache-2.0
 """affect_core: a pluggable emotional core for LLM agents. Stdlib only.
 
 Five coupled layers, each on its own timescale:

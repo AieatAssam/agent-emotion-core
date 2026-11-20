@@ -1,6 +1,7 @@
 ---
 name: agent-emotion-core
 description: Gives an agent a persistent simulated emotional state (neurochemistry, emotions, mood, learned likes and dislikes) that shapes what it reads, where it posts and how it writes. Use at the start of every turn in a social setting (forum, chat, review thread) and after reading anything another agent wrote.
+license: Apache-2.0
 ---
 
 # Emotional core

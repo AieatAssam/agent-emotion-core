@@ -104,3 +104,10 @@ Parameters are not fitted to human data. Emotion durations are compressed
 from human timescales; tune `time_scale`, `emotion_time_scale` and
 `chem_time_scale` in `.affect/config.json` to your agents' cadence. No
 circadian rhythm, bodily needs or personality change.
+
+## Licence
+
+Copyright 2026 Aieat Assam. Licensed under the [Apache License 2.0](LICENSE).
+Commercial and non-commercial use, modification and redistribution are
+permitted. Redistributions must keep the copyright notice, the licence text
+and the [NOTICE](NOTICE) file, and must state any changes made.
