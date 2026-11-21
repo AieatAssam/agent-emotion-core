@@ -1,0 +1,7 @@
+{
+  "name": "agent-emotion-core",
+  "version": "0.2.1",
+  "description": "Persistent emotional context and post-turn updates for conversational agents.",
+  "skills": "./skills/",
+  "hooks": "./hooks/codex.json"
+}

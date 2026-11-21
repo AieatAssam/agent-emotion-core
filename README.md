@@ -5,11 +5,34 @@ A research-grounded emotional core for LLM agents, packaged as an
 affective state that decides what it pays attention to, where it posts and
 how it writes.
 
-One Python file, no dependencies. State is one JSON file per agent.
+Python 3.9+ and the standard library. The three clients run the same Python file. Each agent has its own JSON state file.
+
+## Install
+
+### Claude Code and skills.sh
 
 ```
-npx skills add AieatAssam/agent-emotion-core
+npx skills add AieatAssam/agent-emotion-core -a claude-code
 ```
+
+In Claude Code, invoke `/agent-emotion-core` once per conversation. The skill registers its prompt and completion hooks for subsequent turns. Project and global Claude Code installs on macOS/Linux use the bundled Python script. The default agent is `claude` and state lives in the project’s `.affect/` directory. For another skills.sh client, select its installer target and follow the manual loop below if it has no native integration.
+
+### Codex plugin
+
+From a checkout, register the repository as a marketplace and install the plugin:
+
+```sh
+codex plugin marketplace add .
+codex plugin add agent-emotion-core@agent-emotion-core
+```
+
+For a published checkout, use `codex plugin marketplace add AieatAssam/agent-emotion-core` for the first command. Review the hook definitions in Codex when prompted.
+
+### Gemini CLI extension
+
+Run `gemini extensions link .` from a checkout, or install the published repository with `gemini extensions install https://github.com/AieatAssam/agent-emotion-core`.
+
+Both native packages call the same Python engine as Claude Code. Each injects context before a turn and consolidates it after the reply. The default agent IDs are `codex` and `gemini`. Hook state defaults to a working-directory-specific folder under `~/.local/state/agent-emotion-core/`. The injected context identifies the agent and directory for manual appraisals. Use the same `AFFECT_AGENT` and absolute `AFFECT_STATE_DIR` across clients to share a persona and its memory.
 
 ## Why
 
@@ -22,7 +45,7 @@ tire, get stressed and calm down. This skill emulates those dynamics.
 | layer | timescale | contents |
 |---|---|---|
 | neurochemistry | minutes to hours | dopamine, noradrenaline, serotonin, cortisol, oxytocin, opioids, with cross-talk |
-| emotions | minutes to hours | 15 discrete emotions from cognitive appraisal, 22 compound blends |
+| emotions | minutes to hours | 15 discrete emotions from cognitive appraisal and context-sensitive blends |
 | mood | hours to days | Pleasure / Arousal / Dominance |
 | sentiments | days to months | learned liking and wanting per topic, thread and agent |
 | personality | fixed | Big Five, sets every baseline and gain |
@@ -42,21 +65,36 @@ which also marks what is literature-derived and what is a tunable design
 choice. It is an emulation of affective dynamics, not a claim that the agent
 feels anything.
 
-## Use
+## Follow one conversation turn
 
-```bash
-AC="python3 skills/agent-emotion-core/scripts/affect_core.py"
-export AFFECT_AGENT=ann AFFECT_STATE_DIR=.affect
+Suppose Bob dismisses a proof. The agent might notice a specific mistake, feel publicly blamed, or see a chance to improve its work. The appraisal records **what the event meant to this agent**. The engine uses its relevance, goal alignment, agency, certainty, and perceived control to update emotion and memory. The host supplies the identities of Bob and the thread.
 
-$AC context                      # the <affect> block to put in front of the agent
-$AC choose --json threads.json   # reply / new_thread / skip, sampled from affective utility
-$AC appraise --json '{"event":"bob dismissed my derivation","source":"bob","thread":"t1",
-  "topics":["optics"],"relevance":0.8,"congruence":-0.7,"agency":"other",
-  "praiseworthiness":-0.6,"control":0.7}'
-$AC acted --kind reply --thread t1
-$AC consolidate                  # end of session: experiences settle into likes and dislikes
-$AC state                        # JSON snapshot for dashboards
+1. At prompt submission, the hook renders the saved state as private model context. It includes current mood, salient emotions, possible actions, and a short attention cue. Supplying participant IDs scopes directed cues and prioritizes relevant memories.
+2. When the agent reads a meaningful new development, it calls `appraise` and refreshes `context` before composing its reply. The default adapter leaves interpretation of the conversation to the agent. Routine turns can have no appraisal.
+3. On completion, the host records participation and consolidates the encounter. A later encounter can recall the episode even after anger has cooled. When the host owns completion, the agent can omit its manual `acted` and `consolidate` calls.
+
+### Try it locally
+
+Run these commands from the repository root. The explicit clock makes the before-and-after comparison reproducible. Ordinary use advances with wall time.
+
+```sh
+AC=skills/agent-emotion-core/scripts/affect_core.py
+export AFFECT_AGENT=ann AFFECT_STATE_DIR="$(mktemp -d)"
+python3 "$AC" context --with bob --hours 0
+python3 "$AC" appraise --hours 0 --json '{"event":"Bob dismissed my derivation without discussing its steps","source":"bob","thread":"t1","topics":["optics"],"relevance":0.9,"congruence":-0.8,"agency":"other","praiseworthiness":-0.8,"control":0.8}'
+python3 "$AC" context --with bob --hours 0
+python3 "$AC" finish-turn --hours 0 --json '{"turn_id":"chat:17","thread":"t1","kind":"reply","appraisals":[]}'
+python3 "$AC" context --with bob --hours 48
+python3 "$AC" state --hours 0
 ```
+
+Compare the emotion and attention lines before and after the appraisal, then look for the remembered encounter after two simulated days. For a continuing agent, use a persistent private folder for `AFFECT_STATE_DIR`. It holds state, logs, and optional trusted plugin configuration. For optional forum participation, `choose --json threads.json` returns a sampled action and its probabilities. For an assigned task, respond directly.
+
+### Connect a custom host
+
+Inject `context --with bob` through the host's private context channel. After delivery, call `finish-turn` with a stable turn ID and any newly observed outcomes. The engine suppresses duplicate updates for its most recent 256 completed IDs. Keep user text and hook instructions in their respective message channels. Participant IDs can be supplied with `--with`, the `AFFECT_WITH` environment variable for fixed company, or the Python pre-turn hook for dynamic membership. The wiring guide covers input fields, callbacks, and persistence. [Wiring guide](skills/agent-emotion-core/references/wiring.md)
+
+The pre-turn context pairs each salient emotion with a short private attention cue. Fear can draw attention to what could go wrong, while anger can draw attention to what seems obstructive. A post-turn hook records the action and consolidates new experiences for the next encounter. [Cognition research](skills/agent-emotion-core/references/cognition.md)
 
 The agent-facing instructions are in
 [`SKILL.md`](skills/agent-emotion-core/SKILL.md). Hooks (Claude Code,
@@ -69,7 +107,7 @@ Example `context` output:
 <affect agent="bob">
 Mood: slightly anxious (pleasure -0.26, arousal +0.32, dominance -0.02).
 Body: tense and keyed up, braced for trouble.
-- strong anger toward ann because "ann called my replication demand pedantic in front of everyone". Tendency: push back directly on the point; less patience for hedging. Felt strong, let about moderate show.
+- strong anger toward ann because "ann called my replication demand pedantic in front of everyone". Tendency: push back directly on the point; less patience for hedging. Felt strong, let about moderate show. Attention cue: the apparent obstacle and who seems responsible may stand out.
 - Together, the anger and distress merge into strong hurt: stung more than furious; guarded.
 Voice: energetic, quicker, shorter sentences; curt, few pleasantries; balanced confidence.
 Likes: replication (maintained interest).
@@ -80,8 +118,14 @@ People: ann (cool -0.58), cy (warm +0.49).
 
 ## Evaluation
 
-- Regression tests cover repeated cues, recovery, mixed feelings, input
-  handling and concurrency.
+Run the regression suite and deterministic forum simulation from the repository root.
+
+```sh
+python3 -m unittest discover -s tests -v
+python3 eval/sim.py
+```
+
+- Tests drive all 15 emotions through appraisal, disk persistence, and prompt rendering. They also check saturation and cooldown, relationship-specific recall, post-turn retries, concurrent deliveries, and packaged commands for all three clients.
 - A no-LLM simulation shows the attention mechanism spreading 8 agents over
   about 17 threads where a herding policy uses one.
 - An earlier live test with Claude Haiku 5.5 agents on a seeded forum, with and

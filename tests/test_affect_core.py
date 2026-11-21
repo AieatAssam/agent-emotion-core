@@ -199,6 +199,42 @@ class Neurochemistry(unittest.TestCase):
 
 
 class EmotionalTrajectories(unittest.TestCase):
+    def test_stronger_appraisals_have_diminishing_returns(self):
+        win = {"event": "project succeeded", "relevance": 1, "novelty": 0}
+        low, medium, high = [core({"E": 0.8}).appraise({**win, "congruence": strength})["joy"]
+                             for strength in (0.5, 0.75, 1)]
+        self.assertGreater(high, medium)
+        self.assertGreater(medium - low, high - medium)
+        self.assertLess(high, 1)
+
+    def test_strong_anger_retains_more_of_its_peak_during_cooldown(self):
+        mild, strong = core(), core()
+        insult = {**INSULT, "relevance": 1, "control": 1, "novelty": 0}
+        mild.appraise({**insult, "congruence": -0.5, "praiseworthiness": -0.5})
+        strong.appraise({**insult, "congruence": -1, "praiseworthiness": -1})
+        mild_peak, strong_peak = mild.intensity("anger"), strong.intensity("anger")
+        self.assertGreater(strong_peak, mild_peak)
+        for c in (mild, strong):
+            c.advance(1)
+        self.assertLess(strong.intensity("anger"), strong_peak)
+        self.assertGreater(strong.intensity("anger") / strong_peak,
+                           mild.intensity("anger") / mild_peak)
+
+    def test_reminder_revives_anger_after_initial_cooldown(self):
+        quiet, reminded = core(), core()
+        for c in (quiet, reminded):
+            c.appraise(INSULT)
+            c.advance(3)
+        before_reminder = reminded.intensity("anger")
+        reminded.appraise({**INSULT, "event": "remembered bob calling my proof sloppy"})
+        self.assertGreater(reminded.intensity("anger"), before_reminder)
+        for c in (quiet, reminded):
+            c.advance(3)
+        self.assertLess(quiet.intensity("anger"), before_reminder)
+        self.assertGreater(reminded.intensity("anger"), quiet.intensity("anger"))
+        reminded.advance(24)
+        self.assertEqual(reminded.intensity("anger"), 0)
+
     def test_repeated_small_wins_stay_proportional(self):
         small, major = core(), core()
         small_win = {"event": "a typo was fixed", "relevance": 0.4, "congruence": 0.3}

@@ -1,0 +1,10 @@
+{
+  "name": "agent-emotion-core",
+  "interface": {"displayName": "Agent Emotion Core"},
+  "plugins": [{
+    "name": "agent-emotion-core",
+    "source": {"source": "local", "path": "./"},
+    "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+    "category": "Productivity"
+  }]
+}

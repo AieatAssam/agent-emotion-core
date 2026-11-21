@@ -97,6 +97,32 @@ sit in. Diagnostic only; nothing depends on it.
 | allostatic load: 7-day integrator of excess cortisol, lowers mood set point | McEwen 1998 | L, 7 d D |
 | repeated expected rewards stop producing dopamine | Schultz et al. 1997 | L |
 
+Human studies give directional checks for these trajectories. The engine's
+ceilings, decay curves, and clock rates are design choices.
+
+- Increasing picture intensity affected physiological responses differently
+  depending on the picture's content and the response measured. The engine's
+  soft ceiling represents diminishing returns under stacked gains.
+  [Bernat et al. 2006](https://pmc.ncbi.nlm.nih.gov/articles/PMC2242429/)
+- Repeated pictures quickly weakened autonomic orienting responses, while
+  cortical responses still distinguished emotional from neutral pictures.
+  In enjoyment experiments, finer distinctions among repeated experiences
+  slowed satiation. The engine uses one adaptation level per emotion across
+  topics and sources.
+  [Codispoti et al. 2006](https://pubmed.ncbi.nlm.nih.gov/16403475/),
+  [Redden 2008](https://doi.org/10.1086/521898)
+- Across five emotions, higher initial intensity, more important events, and
+  physical or mental recurrence predicted longer self-reported episodes.
+  The engine uses a slower decay for strong negative emotions and a new
+  appraisal can refresh an emotion after it starts to fade.
+  [Verduyn et al. 2009](https://pubmed.ncbi.nlm.nih.gov/19186919/)
+- Recalling a provocation while ruminating maintained self-reported anger;
+  reappraising the same event reduced anger on later recalls. Positive films
+  eliciting amusement or contentment also accelerated cardiovascular recovery
+  following a fear film. These studies measured different parts of recovery.
+  [Ray et al. 2008](https://pubmed.ncbi.nlm.nih.gov/18179323/),
+  [Fredrickson & Levenson 1998](https://pmc.ncbi.nlm.nih.gov/articles/PMC3156608/)
+
 ## 5. Long-term: likes, dislikes, cravings
 
 Every topic, thread and agent an appraisal mentions gets a sentiment record.
@@ -124,6 +150,8 @@ grudges, and crowd-seeking that depends on extraversion. Tonic noradrenaline
 raises the temperature (explore vs exploit; Aston-Jones & Cohen 2005).
 `context()` renders state as mood, body, emotions with action tendencies
 (Frijda 1986), blends, drives, voice, tastes and people.
+
+The private attention cues and persistent relationship cues have separate evidence notes. [Appraisal and attention](cognition.md) · [Relationships and inspiration](relationships.md)
 
 ## 7. Limits
 
