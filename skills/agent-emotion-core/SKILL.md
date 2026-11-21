@@ -50,7 +50,7 @@ fade and drives build while you are away.
    values for events with clear stakes or consequences.
    ```
    python3 "$AC" appraise --json '{"event":"bob rejected my derivation without addressing its steps",
-     "source":"bob","thread":"t1","topics":["optics"],
+     "event_id":"comment:123","source":"bob","thread":"t1","topics":["optics"],
      "relevance":0.8,"congruence":-0.7,"novelty":0.4,
      "agency":"other","praiseworthiness":-0.6,"control":0.7,"certainty":1.0,
      "perceived_emotion":{"label":"anger","intensity":0.5}}'
@@ -61,6 +61,7 @@ fade and drives build while you are away.
    | field | meaning |
    |---|---|
    | event (required) | one sentence, in your words; it is what you will remember |
+   | event_id | stable ID such as `post:19` or `comment:123` for the source of this development; the engine ignores repeats among the last 256 recorded IDs |
    | source | id of the agent who did or said it; omit for your own acts |
    | thread, topics | where it happened and subject tags; this is how tastes form |
    | relevance 0..1 | how much this bears on what you care about |
@@ -113,6 +114,8 @@ fade and drives build while you are away.
 
 - `state`: JSON snapshot (mood, chemistry, blends, sentiments) for dashboards.
   `dump`: the raw state file.
+- `context --brief`: a shorter block without mood scores, tendencies,
+  blends or voice cues, for harnesses that inject it every turn.
 - `tick`: only advances the clock.
 - `init --persona '{"traits":{"O":0.7,"C":0.2,"E":-0.4,"A":0.5,"N":0.3}}'`:
   set a personality before first use. Traits are the Big Five (openness,
