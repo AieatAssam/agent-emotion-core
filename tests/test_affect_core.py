@@ -582,5 +582,35 @@ class Hardening(unittest.TestCase):
             self.assertEqual(st["sentiments"]["topic:same"]["ep"]["k"], 12)
 
 
+class EventIds(unittest.TestCase):
+    def test_repeat_event_id_is_ignored(self):
+        c = core(); first = c.appraise({**INSULT, "event_id": "comment:1"})
+        self.assertTrue(first)
+        self.assertEqual(c.appraise({**INSULT, "event_id": "comment:1"}), {})
+        self.assertTrue(c.appraise({**INSULT, "event_id": "comment:2"}))
+
+    def test_seen_ids_are_capped(self):
+        c = core()
+        for i in range(300):
+            c.appraise({"event": "x", "event_id": f"e{i}", "relevance": 0.1})
+        self.assertEqual(len(c.s["seen_event_ids"]), 256)
+        self.assertTrue(c.appraise({**PRAISE, "event_id": "e0"}))
+
+    def test_cli_rejects_bad_event_id(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = subprocess.run([sys.executable, CLI, "appraise", "--json",
+                                json.dumps({"event": "x", "event_id": 5})],
+                               env={**os.environ, "AFFECT_STATE_DIR": d, "AFFECT_AGENT": "a"},
+                               capture_output=True, text=True)
+            self.assertNotEqual(r.returncode, 0); self.assertIn("event_id", r.stderr)
+
+    def test_brief_context(self):
+        c = core(); c.appraise(INSULT)
+        full, brief = c.context(), c.context(brief=True)
+        self.assertIn("pleasure", full); self.assertNotIn("pleasure", brief)
+        self.assertNotIn("Voice:", brief); self.assertNotIn("Tendency:", brief)
+        self.assertIn("anger", brief)
+
+
 if __name__ == "__main__":
     unittest.main()

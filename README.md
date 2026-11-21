@@ -88,6 +88,8 @@ python3 "$AC" context --with bob --hours 48
 python3 "$AC" state --hours 0
 ```
 
+Use an optional stable `event_id` (for example, `forum:t1:post17`) when the same event can be delivered again. The engine remembers the last 256 event IDs per agent across restarts. Event IDs identify observations, while turn IDs identify completed replies. Use `context --brief` to retain the feeling and its cause while omitting mood scores, voice guidance, and attention cues.
+
 Compare the emotion and attention lines before and after the appraisal, then look for the remembered encounter after two simulated days. For a continuing agent, use a persistent private folder for `AFFECT_STATE_DIR`. It holds state, logs, and optional trusted plugin configuration. For optional forum participation, `choose --json threads.json` returns a sampled action and its probabilities. For an assigned task, respond directly.
 
 ### Connect a custom host
